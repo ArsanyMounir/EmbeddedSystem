@@ -1,0 +1,117 @@
+
+Allocating common symbols
+Common symbol       size              file
+
+i                   0x4               startup.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+flash            0x00000000         0x20000000         xr
+sram             0x20000000         0x20000000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+
+.text           0x00000000      0x1d4
+ *(.vectors*)
+ .vectors       0x00000000       0x1c startup.o
+                0x00000000                g_p_fn_Vectors
+ *(.text*)
+ .text          0x0000001c       0xc0 main.o
+                0x0000001c                main
+ .text          0x000000dc       0xf8 startup.o
+                0x000000dc                Bus_Fault_Handler
+                0x000000dc                H_Fault_Handler
+                0x000000dc                MM_Fault_Handler
+                0x000000dc                Usage_Fault_Handler
+                0x000000dc                Default_Handler
+                0x000000dc                NMI_Handler
+                0x000000e8                Reset_Handler
+ *(.rodata*)
+                0x000001d4                _E_text = .
+
+.glue_7         0x000001d4        0x0
+ .glue_7        0x00000000        0x0 linker stubs
+
+.glue_7t        0x000001d4        0x0
+ .glue_7t       0x00000000        0x0 linker stubs
+
+.vfp11_veneer   0x000001d4        0x0
+ .vfp11_veneer  0x00000000        0x0 linker stubs
+
+.v4_bx          0x000001d4        0x0
+ .v4_bx         0x00000000        0x0 linker stubs
+
+.iplt           0x000001d4        0x0
+ .iplt          0x00000000        0x0 main.o
+
+.rel.dyn        0x000001d4        0x0
+ .rel.iplt      0x00000000        0x0 main.o
+
+.data           0x20000000        0x0 load address 0x000001d4
+                0x20000000                _S_DATA = .
+ *(.data)
+ .data          0x20000000        0x0 main.o
+ .data          0x20000000        0x0 startup.o
+                0x20000000                _E_DATA = .
+
+.igot.plt       0x20000000        0x0 load address 0x000001d4
+ .igot.plt      0x00000000        0x0 main.o
+
+.bss            0x20000000      0x404 load address 0x000001d4
+                0x20000000                _S_bss = .
+ *(.bss)
+ .bss           0x20000000        0x0 main.o
+ .bss           0x20000000      0x400 startup.o
+                0x20000400                _E_bss = .
+ COMMON         0x20000400        0x4 startup.o
+                0x20000400                i
+LOAD main.o
+LOAD startup.o
+OUTPUT(Lab3_CortexM4.elf elf32-littlearm)
+
+.debug_info     0x00000000      0x224
+ .debug_info    0x00000000       0x9e main.o
+ .debug_info    0x0000009e      0x186 startup.o
+
+.debug_abbrev   0x00000000      0x124
+ .debug_abbrev  0x00000000       0x5c main.o
+ .debug_abbrev  0x0000005c       0xc8 startup.o
+
+.debug_loc      0x00000000       0x9c
+ .debug_loc     0x00000000       0x38 main.o
+ .debug_loc     0x00000038       0x64 startup.o
+
+.debug_aranges  0x00000000       0x40
+ .debug_aranges
+                0x00000000       0x20 main.o
+ .debug_aranges
+                0x00000020       0x20 startup.o
+
+.debug_line     0x00000000       0xca
+ .debug_line    0x00000000       0x63 main.o
+ .debug_line    0x00000063       0x67 startup.o
+
+.debug_str      0x00000000      0x140
+ .debug_str     0x00000000       0xb1 main.o
+                                 0xe5 (size before relaxing)
+ .debug_str     0x000000b1       0x8f startup.o
+                                0x15e (size before relaxing)
+
+.comment        0x00000000       0x11
+ .comment       0x00000000       0x11 main.o
+                                 0x12 (size before relaxing)
+ .comment       0x00000000       0x12 startup.o
+
+.ARM.attributes
+                0x00000000       0x33
+ .ARM.attributes
+                0x00000000       0x33 main.o
+ .ARM.attributes
+                0x00000033       0x33 startup.o
+
+.debug_frame    0x00000000       0x78
+ .debug_frame   0x00000000       0x2c main.o
+ .debug_frame   0x0000002c       0x4c startup.o
