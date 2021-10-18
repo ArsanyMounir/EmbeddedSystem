@@ -1,0 +1,67 @@
+/*
+ *  STM32F103C6_GPIO_Driver.h
+ *
+ *  Created on: Oct 13, 2021
+ *      Author: Arshy
+ */
+
+#ifndef INC_STM32F103C6_GPIO_DRIVER_H_
+#define INC_STM32F103C6_GPIO_DRIVER_H_
+
+//-----------------------------
+//Includes
+//-----------------------------
+#include "STM32F103C6.h"
+
+
+//==============================================================
+
+
+//-----------------------------
+//Config Structure
+//-----------------------------
+typedef struct
+{
+	uint16_t GPIO_PinNumber ;	//Specifies the GPIO Pins to be Configured
+								//This Parameter must be set at Macro Configuration Manual @ref GPIO_PINS_Define
+
+	uint8_t GPIO_Mode ;			//Specifies the Operation mode of the selected pins
+								//This Parameter must be set at Macro Configuration Manual @ref GPIO_MODE_Define
+
+
+
+}GPIO_PinConfig_t;
+
+
+
+
+//==============================================================
+
+
+//-----------------------------
+//Macro Configuration Manual
+//-----------------------------
+
+//@ref GPIO_PINS_Define
+
+
+
+
+
+//@ref GPIO_MODE_Define
+
+
+//
+
+
+
+//==============================================================
+
+
+//==============================================================
+//								APIs
+//==============================================================
+
+
+
+#endif /* INC_STM32F103C6_GPIO_DRIVER_H_ */

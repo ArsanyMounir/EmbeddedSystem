@@ -1,0 +1,56 @@
+/*
+ * STM32F103C6_GPIO_Driver.c
+ *
+ *  Created on: Oct 13, 2021
+ *      Author: Arsany
+ */
+#include "STM32F103C6_GPIO_Driver.h"
+
+
+
+
+
+
+
+/**================================================================
+ * @Fn			-MCAL_GPIO_Init
+ * @brief		-Initializes the GPIOx PINy accourding to the specefied parameters of PinConfig
+ * @param [in] 	-GPIOx : where x can be (A..E depending on device used) to select the GPIO Peripheral
+ * @param [in]	-PinConfig : Pointer to GPIO_PinConfig_t which contains
+ * 				 the configuration info for specified GPIO
+ * @retval 		-None
+ * Note 		-STM32F103C6 MCU has GPIO A,B,C,D,E
+ * 				 but LQFP48 Package has A,B ,Part of C&D and no E
+ */
+
+void MCAL_GPIO_Init (GPIO_TypeDef* GPIOx,GPIO_PinConfig_t* PinConfig)
+{
+
+}
+
+
+
+
+/**================================================================
+ * @Fn			-MCAL_GPIO_DeInit
+ * @brief		-Reset all GPIOx Registers
+ * @param [in] 	-GPIOx : where x can be (A..E depending on device used) to select the GPIO Peripheral
+ * @retval 		-None
+ * Note 		-None
+ */
+
+
+void MCAL_GPIO_DeInit (GPIO_TypeDef* GPIOx)
+{
+
+}
+
+
+
+
+
+
+
+
+
+

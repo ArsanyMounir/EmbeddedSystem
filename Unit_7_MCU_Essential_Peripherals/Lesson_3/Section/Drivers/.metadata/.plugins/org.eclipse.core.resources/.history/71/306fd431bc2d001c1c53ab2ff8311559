@@ -1,0 +1,25 @@
+/*
+ * STM32F103C6_GPIO_Driver.c
+ *
+ *  Created on: Oct 13, 2021
+ *      Author: Arsany
+ */
+#include "STM32F103C6_GPIO_Driver.h"
+
+
+
+
+
+
+
+/**================================================================
+ * @Fn			-MCAL_GPIO_Init
+ * @brief		-Initializes the GPIOx PINy accourding to the specefied parameters of PinConfig
+ * @param [in] 	-GPIOx : where x can be (A..E depending on device used) to select the GPIO Peripheral
+ * @param [in]	-PinConfig : Pointer to GPIO
+ * @retval 		-
+ * Note 		-
+ */
+
+void MCAL_GPIO_Init (GPIO_TypeDef* GPIOx,GPIO_PinConfig_t* PinConfig);
+
