@@ -1,0 +1,50 @@
+Thu Oct 21 19:37:24 EET 2021
+ERROR org.eclipse.rse.ui  RSEG1064U: SUB#0:IDK
+--------------------------------------------
+Thu Oct 21 19:37:24 EET 2021
+ERROR org.eclipse.rse.ui  RSEG1064U: SUB#1:org.eclipse.core.runtime.AssertionFailedException: assertion failed: Cannot move '/Drivers'. Destination should not be under source's hierarchy.
+org.eclipse.core.runtime.AssertionFailedException: assertion failed: Cannot move '/Drivers'. Destination should not be under source's hierarchy.
+	at org.eclipse.core.runtime.Assert.isTrue(Assert.java:113)
+	at org.eclipse.core.internal.resources.Resource.assertMoveRequirements(Resource.java:199)
+	at org.eclipse.core.internal.resources.Resource.move(Resource.java:1482)
+	at org.eclipse.core.internal.resources.Resource.move(Resource.java:1467)
+	at org.eclipse.rse.internal.files.ui.view.SystemViewRemoteFileAdapter.doRename(SystemViewRemoteFileAdapter.java:3140)
+	at org.eclipse.rse.internal.ui.view.SystemView$RenameJob.runInWorkspace(SystemView.java:5507)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+org.eclipse.core.runtime.AssertionFailedException: assertion failed: Cannot move '/Drivers'. Destination should not be under source's hierarchy.
+	at org.eclipse.core.runtime.Assert.isTrue(Assert.java:113)
+	at org.eclipse.core.internal.resources.Resource.assertMoveRequirements(Resource.java:199)
+	at org.eclipse.core.internal.resources.Resource.move(Resource.java:1482)
+	at org.eclipse.core.internal.resources.Resource.move(Resource.java:1467)
+	at org.eclipse.rse.internal.files.ui.view.SystemViewRemoteFileAdapter.doRename(SystemViewRemoteFileAdapter.java:3140)
+	at org.eclipse.rse.internal.ui.view.SystemView$RenameJob.runInWorkspace(SystemView.java:5507)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+--------------------------------------------
+Thu Oct 21 19:37:46 EET 2021
+ERROR org.eclipse.rse.ui  RSEG1064U: SUB#0:IDK
+--------------------------------------------
+Thu Oct 21 19:37:46 EET 2021
+ERROR org.eclipse.rse.ui  RSEG1064U: SUB#1:org.eclipse.core.runtime.AssertionFailedException: assertion failed: Cannot move '/Driver'. Destination should not be under source's hierarchy.
+org.eclipse.core.runtime.AssertionFailedException: assertion failed: Cannot move '/Driver'. Destination should not be under source's hierarchy.
+	at org.eclipse.core.runtime.Assert.isTrue(Assert.java:113)
+	at org.eclipse.core.internal.resources.Resource.assertMoveRequirements(Resource.java:199)
+	at org.eclipse.core.internal.resources.Resource.move(Resource.java:1482)
+	at org.eclipse.core.internal.resources.Resource.move(Resource.java:1467)
+	at org.eclipse.rse.internal.files.ui.view.SystemViewRemoteFileAdapter.doRename(SystemViewRemoteFileAdapter.java:3140)
+	at org.eclipse.rse.internal.ui.view.SystemView$RenameJob.runInWorkspace(SystemView.java:5507)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+org.eclipse.core.runtime.AssertionFailedException: assertion failed: Cannot move '/Driver'. Destination should not be under source's hierarchy.
+	at org.eclipse.core.runtime.Assert.isTrue(Assert.java:113)
+	at org.eclipse.core.internal.resources.Resource.assertMoveRequirements(Resource.java:199)
+	at org.eclipse.core.internal.resources.Resource.move(Resource.java:1482)
+	at org.eclipse.core.internal.resources.Resource.move(Resource.java:1467)
+	at org.eclipse.rse.internal.files.ui.view.SystemViewRemoteFileAdapter.doRename(SystemViewRemoteFileAdapter.java:3140)
+	at org.eclipse.rse.internal.ui.view.SystemView$RenameJob.runInWorkspace(SystemView.java:5507)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+--------------------------------------------
