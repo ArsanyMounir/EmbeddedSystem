@@ -38,7 +38,7 @@
 
 ## Overall progress ![image](https://progress-bar.dev/1/?scale=3&title=Terms&suffix=&width=230&color=aa00ff)
 
-[![image](https://drive.google.com/file/d/1ERX_KT4g3xLKS126V7hZYfnQFSvs6sgV/view?usp=drive_link)](https://www.learn-in-depth-store.com/certificate/arsanyashrafmounir%40gmail.com)
+[![image](https://github.com/ArsanyMounir/EmbeddedSystem/blob/master/Term1_Certificate.png)](https://www.learn-in-depth-store.com/certificate/arsanyashrafmounir%40gmail.com)
 
 ---
 
