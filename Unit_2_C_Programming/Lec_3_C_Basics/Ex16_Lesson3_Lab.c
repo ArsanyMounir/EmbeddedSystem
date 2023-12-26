@@ -1,6 +1,5 @@
 /*
  * Ex16_Lesson3_Lab.c
- *
  *  Created on: Dec 23, 2023
  *      Author: Arsany
  */
