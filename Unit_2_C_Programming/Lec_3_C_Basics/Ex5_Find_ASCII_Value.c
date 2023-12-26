@@ -1,18 +1,17 @@
 /*
- * Ex5_Find_ASCII_Value.c
+ * main.c
  *
- *  Created on: Jul 8, 2021
+ *  Created on: Dec 25, 2023
  *      Author: Arsany
  */
 #include "stdio.h"
-void main ()
+
+int main ()
 {
-	char c;
-	printf("Enter a character: ");
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%c",&c);
-	printf("ASCII value of %c = %d",c,c);
+	char x ;
+	printf("Enter a character : ");
+	fflush(stdin);	fflush(stdout);
+	scanf("%c",&x);
+	printf("ASCII value of %c = %d",x,x);
+	return 0;
 }
-
-

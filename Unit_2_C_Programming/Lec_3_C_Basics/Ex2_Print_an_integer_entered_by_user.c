@@ -8,10 +8,10 @@
 
 int main ()
 {
-	int x,y ;
-	printf("Enter two integers : ");
+	int input ;
+	printf("Enter an integer : ");
 	fflush(stdin);	fflush(stdout);
-	scanf("%d %d",&x,&y);
-	printf("Sum: %d",x+y);
+	scanf("%d",&input);
+	printf("You entered: %d",input);
 	return 0;
 }

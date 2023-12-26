@@ -1,29 +1,49 @@
 /*
- * Ex15_Simple_Calculator.c
+ * main.c
  *
- *  Created on: Jul 8, 2021
+ *  Created on: Dec 25, 2023
  *      Author: Arsany
  */
 #include "stdio.h"
-void main()
-{
-	char x;
-	float num1,num2;
-	printf("Enter operator either + or - or * or / ");
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%c",&x);
-	printf("Enter two operands: ");
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%f %f",&num1,&num2);
-	switch(x)
-	{
-		case'+':printf("%.1f %c %.1f = %.1f",num1,x,num2,num1+num2);break;
-		case'-':printf("%.1f %c %.1f = %.1f",num1,x,num2,num1-num2);break;
-		case'*':printf("%.1f %c %.1f = %.1f",num1,x,num2,num1*num2);break;
-		case'/':printf("%.1f %c %.1f = %.1f",num1,x,num2,num1/num2);break;
-		default:printf("error:invalide operator");break;
-	}
-}
 
+int main ()
+{
+	float x,y;
+	char c ;
+	while (1)
+	{
+		printf("Enter operand either + or - or * or /: ");
+		fflush(stdin);	fflush(stdout);
+		scanf("%c",&c);
+		printf("Enter two number:");
+		fflush(stdin);	fflush(stdout);
+		scanf("%f %f",&x,&y);
+		if(c=='+')
+			printf ("%.3f %c %.3f = %.3f\n",x,c,y,x+y);
+		if(c=='-')
+			printf ("%.3f %c %.3f = %.3f\n",x,c,y,x-y);
+		if(c=='*')
+			printf ("%.3f %c %.3f = %.3f\n",x,c,y,x*y);
+		if(c=='/')
+		{
+			if(y ==0)
+				printf("Can't divide by zero\n");
+			else
+				printf ("%.3f %c %.3f = %.3f\n",x,c,y,x/y);
+		}
+		printf("press Y to do another operation , N to exit\n");
+		fflush(stdin);	fflush(stdout);
+		scanf("%c",&c);
+		if (c=='y'||c=='Y')
+			continue;
+		else if (c=='n'||c=='N')
+			break;
+		else
+		{
+			printf("Error , Bye Bye");
+			break;
+		}
+	}
+
+	return 0;
+}

@@ -1,17 +1,17 @@
 /*
- * Ex4_Multiply_two_float.c
+ * main.c
  *
- *  Created on: Jul 8, 2021
+ *  Created on: Dec 25, 2023
  *      Author: Arsany
  */
 #include "stdio.h"
-void main ()
-{
-	float num1,num2;
-	printf("Enter two numbers: ");
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%f %f",&num1,&num2);
-	printf("Product: %f",num1*num2);
-}
 
+int main ()
+{
+	float x,y ;
+	printf("Enter two numbers : ");
+	fflush(stdin);	fflush(stdout);
+	scanf("%f %f",&x,&y);
+	printf("Product: %f",x*y);
+	return 0;
+}

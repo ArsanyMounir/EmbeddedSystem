@@ -9,19 +9,19 @@
 int main ()
 {
 	int x,i;
-	unsigned long long int fact=1;
-	printf("Enter a postive integer: ");
+	int sum=0;
+	printf("Enter an integer: ");
 	fflush(stdin);	fflush(stdout);
 	scanf("%d",&x);
-	if(x<0)
+	if(x<=0)
 		printf("%d is not postive",x);
 	else
 	{
 		for(i=1;i<=x;i++)
 		{
-			fact*=i;
+			sum+=i;
 		}
-		printf("%d factorial = %lu",x,fact);
+		printf("sum = %d",sum);
 	}
 	return 0;
 }

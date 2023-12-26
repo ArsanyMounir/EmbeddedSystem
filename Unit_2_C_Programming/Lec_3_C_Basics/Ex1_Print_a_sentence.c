@@ -1,11 +1,13 @@
 /*
- * Ex1_Print_a_sentence.c
+ * main.c
  *
- *  Created on: Jul 8, 2021
+ *  Created on: Dec 25, 2023
  *      Author: Arsany
  */
 #include "stdio.h"
-void main ()
+
+int main ()
 {
 	printf("C Programming");
+	return 0;
 }

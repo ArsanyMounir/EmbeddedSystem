@@ -9,12 +9,12 @@
 int main ()
 {
 	char x;
-	printf("Enter a character: ");
+	printf("Enter an alphabet: ");
 	fflush(stdin);	fflush(stdout);
 	scanf("%c",&x);
-	if(x>=65 && x<=90 ||x>=97 && x<=122)
-		printf("%c is an alphabet",x);
+	if(x=='a'||x=='A'||x=='e'||x=='E'||x=='i'||x=='I'||x=='o'||x=='O'||x=='u'||x=='U')
+		printf("%c is a vowel.",x);
 	else
-		printf("%c is not an alphabet",x);
+		printf("%c is a constant.",x);
 	return 0;
 }

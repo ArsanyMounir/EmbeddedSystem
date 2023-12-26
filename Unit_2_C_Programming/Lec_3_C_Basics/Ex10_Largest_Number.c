@@ -1,35 +1,27 @@
 /*
- * Ex10_Largest_Number.c
+ * main.c
  *
- *  Created on: Jul 8, 2021
+ *  Created on: Dec 25, 2023
  *      Author: Arsany
  */
-#include"stdio.h"
-void main()
+#include "stdio.h"
+
+int main ()
 {
 	float x,y,z;
 	printf("Enter three numbers: ");
-	fflush(stdout);
-	fflush(stdin);
+	fflush(stdin);	fflush(stdout);
 	scanf("%f %f %f",&x,&y,&z);
 	if(x>y)
 	{
 		if(x>z)
-		{
-			printf("Largest Number = %.2f",x);
-		}
+			printf("largest number = %.4f",x);
 		else
-		{
-			printf("Largest Number = %.2f",z);
-		}
+			printf("largest number = %.4f",z);
 	}
 	else if (y>z)
-	{
-		printf("Largest Number = %.2f",y);
-	}
+		printf("largest number = %.4f",y);
 	else
-	{
-		printf("Largest Number = %.2f",z);
-	}
+		printf("largest number = %.4f",z);
+	return 0;
 }
-

@@ -1,28 +1,22 @@
 /*
- * Ex11_Check_Postive_or_Negative.c
+ * main.c
  *
- *  Created on: Jul 8, 2021
+ *  Created on: Dec 25, 2023
  *      Author: Arsany
  */
-#include"stdio.h"
-void main()
+#include "stdio.h"
+
+int main ()
 {
 	float x;
 	printf("Enter a number: ");
-	fflush(stdout);
-	fflush(stdin);
+	fflush(stdin);	fflush(stdout);
 	scanf("%f",&x);
 	if(x>0)
-	{
-		printf("%.2f is positive",x);
-	}
-	else if(x<0)
-	{
-		printf("%.2f is negative",x);
-	}
+		printf("%.2f is postive",x);
+	else if (x==0)
+		printf("You entered zero");
 	else
-	{
-		printf("You entered zero.");
-	}
-
+		printf("%.2f is negative",x);
+	return 0;
 }
