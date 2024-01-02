@@ -1,39 +1,36 @@
 /*
- * Ex2_Average_Array.c
+ * main.c
  *
- *  Created on: Jul 11, 2021
+ *  Created on: Jan 2, 2024
  *      Author: Arsany
  */
-#include"stdio.h"
-void main()
+#include "stdio.h"
+
+int main ()
 {
-	float arr[100],sum=0,avg;
-	int n,i;
-	printf("Enter the numbers of data: ");
-	fflush(stdin);
-	fflush(stdout);
-	scanf("%d",&n);
-	while(n>100||n<0)
+	float m[100],average,sum=0;
+	int i,limit;
+	printf("Enter the number of data :");
+	fflush(stdin);fflush(stdout);
+	scanf("%d",&limit);
+	while(limit>100||limit<0)
 	{
-		printf("invalid input (number should be between 0 and 100)\n");
+		printf("invalid input , Number should be between 0 and 100 \n");
 		printf("Please re-enter the number");
-		fflush(stdin);
-		fflush(stdout);
-		scanf("%d",&n);
+		fflush(stdin);fflush(stdout);
+		scanf("%d",&limit);
 	}
-	for(i=0;i<n;i++)
+	for (i=0;i<limit;i++)
 	{
-		printf("%d. Enter number: ",i+1);
-		fflush(stdin);
-		fflush(stdout);
-		scanf("%f",&arr[i]);
+		printf("%d.Enter number : ",i+1);
+		fflush(stdin);fflush(stdout);
+		scanf("%f",&m[i]);
+		fflush(stdin);fflush(stdout);
+		sum+=m[i];
 	}
-	for(i=0;i<n;i++)
-	{
-		sum+=arr[i];
-	}
-	avg=sum/n;
-	printf("Average = %.2f",avg);
+	average = sum / limit;
 
+	printf("Average = %.2f",average);
+
+	return 0;
 }
-
