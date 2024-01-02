@@ -1,22 +1,23 @@
 /*
- * Ex7_find_length_of_string.c
+ * main.c
  *
- *  Created on: Jul 11, 2021
+ *  Created on: Jan 2, 2024
  *      Author: Arsany
  */
-#include"stdio.h"
-void main()
+#include "stdio.h"
+#include "string.h"
+int main ()
 {
 	char string[100];
 	int i=0;
-	printf("Enter a string: ");
-	fflush(stdin);
-	fflush(stdout);
+	printf("Enter a string :");
+	fflush(stdin);fflush(stdout);
 	gets(string);
-	while(string[i]!=0)
+
+	while(string[i]!= '\0')
 	{
 		i++;
 	}
-	printf("Length of string: %d",i);
+	printf("length of string %d ",i);
+	return 0;
 }
-
