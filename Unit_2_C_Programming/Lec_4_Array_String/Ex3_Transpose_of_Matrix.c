@@ -1,55 +1,55 @@
 /*
- * Ex3_Transpose_of_Matrix.c
+ * main.c
  *
- *  Created on: Jul 11, 2021
+ *  Created on: Jan 2, 2024
  *      Author: Arsany
  */
-#include"stdio.h"
-void main()
+#include "stdio.h"
+
+int main ()
 {
-	int i,j,rows,columns,matrix[10][10],transpose[10][10];
-	printf("Enter rows and column of matrix: ");
-	fflush(stdin);
-	fflush(stdout);
-	scanf("%d %d",&rows,&columns);
-	while(rows>10||rows<0||columns<0||columns>10)
+	float m[10][10],t[10][10];
+	int i,j,r,c;
+	printf("Enter rows and column of matrix :");
+	fflush(stdin);fflush(stdout);
+	scanf("%d %d",&r,&c);
+	while(r>10||r<0||c<0||c>10)
 	{
-		printf("invalid input (range between 0 and 10)\nPlease re-enter data");
-		fflush(stdin);
-		fflush(stdout);
-		scanf("%d %d",&rows,&columns);
-	}
-	printf("Enter elemets of matrix:\n");
-	for(i=0;i<rows;i++)
-	{
-		for(j=0;j<columns;j++)
-		{
-			printf("Enter elements a%d%d: ",i+1,j+1);
-			fflush(stdin);
-			fflush(stdout);
-			scanf("%d",&matrix[i][j]);
 
+		printf("invalid input , range should be between 1 and 10 \n");
+		printf("Please re-enter rows and columns");
+		fflush(stdin);fflush(stdout);
+		scanf("%d %d",&r,&c);
+	}
+	printf("Enter elements of matrix :\n");
+	for (i=0;i<r;i++)
+	{
+		for(j=0;j<c;j++)
+		{
+			printf("Enter element a%d%d : ",i+1,j+1);
+			fflush(stdin);fflush(stdout);
+			scanf("%f",&m[i][j]);
 		}
 	}
-	printf("Entered Matrix:\n");
-	for(i=0;i<rows;i++)
+	printf("Entered matrix: \n");
+	for (i=0;i<r;i++)
 	{
-		for(j=0;j<columns;j++)
+		for(j=0;j<c;j++)
 		{
-			transpose[j][i]=matrix[i][j];
-			printf("%d\t",matrix[i][j]);
+			printf("%.2f ",m[i][j]);
+			t[j][i]=m[i][j]; // calculating the transpose while printing rather than using another loop
 		}
-		printf("\n\n");
+		printf("\n");
 	}
-	printf("Transpose of Matrix:\n");
-	for(i=0;i<columns;i++)
+	printf("Transpose of Matrix: \n");
+	for (i=0;i<c;i++)
 	{
-		for(j=0;j<rows;j++)
+		for(j=0;j<r;j++)
 		{
-			printf("%d\t",transpose[i][j]);
+			printf("%.2f ",t[i][j]);
 		}
-		printf("\n\n");
+		printf("\n");
 	}
 
+	return 0;
 }
-
