@@ -1,37 +1,43 @@
 /*
- * Ex5_Search_in_Array.c
+ * main.c
  *
- *  Created on: Jul 11, 2021
+ *  Created on: Jan 2, 2024
  *      Author: Arsany
  */
-#include"stdio.h"
-void main()
-{
-	int elements, arr[40],i,findElement;
-	printf("Enter no of elemets : ");
-	fflush(stdin);
-	fflush(stdout);
-	scanf("%d",&elements);
-	for(i=0;i<elements;i++)
-	{
-		scanf("%d",&arr[i]);
-	}
-	printf("Enter the elemets to be searched : ");
-	fflush(stdin);
-	fflush(stdout);
-	scanf("%d",&findElement);
-	for(i=0;i<elements;i++)
-	{
-		if(arr[i]==findElement)
-			break;
-	}
-	if(i<elements)
-	{
-		printf("Number found at location = %d",i+1);
-	}
-	else
-	{
-		printf("element not found");
-	}
-}
+#include "stdio.h"
 
+int main ()
+{
+	float m[100],element;
+	int no,i;
+	printf("Enter no of elements :");
+	fflush(stdin);fflush(stdout);
+	scanf("%d",&no);
+	while(no>100||no<0)
+	{
+		printf("invalid input , range should be between 1 and 100 \n");
+		printf("Please re-enter no of elements");
+		fflush(stdin);fflush(stdout);
+		scanf("%d",&no);
+	}
+	printf("Enter elements of array :\n");
+	for (i=0;i<no;i++)
+	{
+		printf("Enter element %d : ",i+1);
+		fflush(stdin);fflush(stdout);
+		scanf("%f",&m[i]);
+	}
+	printf("Enter the element to be searched :");
+	fflush(stdin);fflush(stdout);
+	scanf("%f",&element);
+	for(i=0;i<no;i++)
+	{
+		if(m[i]==element)
+		{
+			printf("Number found at the location = %d",i+1);
+			return 0;
+		}
+	}
+	printf("Error number not found.");
+	return 0;
+}
