@@ -1,36 +1,35 @@
 /*
- * Ex1_Prime_in_interval.c
+ * main.c
  *
- *  Created on: Jul 14, 2021
+ *  Created on: Jan 9, 2024
  *      Author: Arsany
  */
 #include "stdio.h"
 
-int findPrime(int a);
-void main()
+int primeFinder (int x );
+
+int main ()
 {
-	int a,b,i;
-	printf("Enter two numbers (Intervals): ");
-	fflush(stdin);
-	fflush(stdout);
-	scanf("%d %d",&a,&b);
-	printf("Prime number between %d and %d are: ",a,b);
-	for(i=a;i<=b;i++)
+	int x,y,i ;
+	printf(" Enter two number (intervals): ");
+	fflush(stdin);fflush(stdout);
+	scanf("%d %d",&x,&y);
+	printf("Prime numbers between %d and %d are :",x,y);
+	for(i=x;i<=y;i++)
 	{
-		if(findPrime(i))
-			printf("%d ",i);
-		else
-			continue;
+		if(primeFinder(i))
+			printf("%d ", i);
 	}
+		return 0;
 }
 
-int findPrime(int a)
+int primeFinder (int x)
 {
-	int j,check;
-	for(j=2;j<a;j++)
+	int j;
+	for(j=2;j<x;j++)
 	{
-		if(a%j==0)
-			return 0;
+		if(x%j==0)
+			return 0; //will make if statement false , so it doesn't print this number
 	}
-	return 1;
+	return 1; // end of loop without return means number is prime , so returns 1 whice makes if statment true
 }
