@@ -1,31 +1,32 @@
 /*
- * Ex4_Power_Recursion.c
+ * main.c
  *
- *  Created on: Jul 14, 2021
+ *  Created on: Jan 9, 2024
  *      Author: Arsany
  */
-#include"stdio.h"
+#include "stdio.h"
+#include "string.h"
+int Power (int x,int y);
 
-int Power(int x,int e);
-
-void main()
+int main ()
 {
-	int x,e;
-	printf("Enter base number: ");
-	fflush(stdin);
-	fflush(stdout);
-	scanf("%d",&x);
-	printf("Enter power numbe (positive integer): ");
-	fflush(stdin);
-	fflush(stdout);
-	scanf("%d",&e);
-	printf("%d^%d = %d",x,e,Power(x,e));
+	int z,n;
+	printf("Enter base number :");
+	fflush(stdin);fflush(stdout);
+	scanf("%d",&z);
+	printf("Enter power number :");
+	fflush(stdin);fflush(stdout);
+	scanf("%d",&n);
+	printf("%d ^ %d = %d",z,n,Power(z,n));
+
+	return 0;
 }
 
-int Power(int x,int e)
+int Power (int x,int y)
 {
-	if(e==0)
+	if(y==0)
 		return 1;
 	else
-		return x*Power(x,e-1);
+		return x* Power(x,y-1) ;
+
 }
