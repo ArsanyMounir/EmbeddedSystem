@@ -1,27 +1,35 @@
 /*
- * Ex2_Factorial_Recursion.c
+ * main.c
  *
- *  Created on: Jul 14, 2021
+ *  Created on: Jan 9, 2024
  *      Author: Arsany
  */
 #include "stdio.h"
 
-int findFactorial(int x);
+int factorial (int x );
 
-void main()
+int main ()
 {
-	int a;
-	printf("Enter an positive integer: ");
-	fflush(stdin);
-	fflush(stdout);
-	scanf("%d",&a);
-	printf("Factorial of %d = %d",a,findFactorial(a));
+	int x ;
+	printf(" Enter a positive integer : ");
+	fflush(stdin);fflush(stdout);
+	scanf("%d",&x);
+	if (x<0)
+	{
+		printf("Error ,number is negative.");
+	}
+	else if (x %1 !=0 )
+	{
+		printf("Error ,number isn't an integer");
+	}
+	printf("Factorial of %d = %d",x,factorial(x));
+	return 0;
 }
 
-int findFactorial(int x)
+int factorial (int x)
 {
-	if(x==0||x==1)
+	if(x==1||x==0)
 		return 1;
 	else
-		return x*findFactorial(x-1);
+		return x*factorial(x-1);
 }
