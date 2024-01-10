@@ -1,30 +1,30 @@
 /*
- * Ex3_Reverse_Sentence_Recursion.c
+ * main.c
  *
- *  Created on: Jul 14, 2021
+ *  Created on: Jan 9, 2024
  *      Author: Arsany
  */
 #include "stdio.h"
+#include "string.h"
+void reverseString ();
 
-void reverseSentence();
-
-void main()
+int main ()
 {
-	printf("Enter a sentence: ");
-	fflush(stdout);
-	fflush(stdin);
-	reverseSentence();
+
+	printf("Enter a sentence :");
+	fflush(stdin);fflush(stdout);
+	reverseString();
+	return 0;
 }
 
-void reverseSentence()
+void reverseString ()
 {
 	char c;
 	scanf("%c",&c);
-	if(c!='\n')
+	if(c !='\n')
 	{
-		reverseSentence();
+		reverseString();
 		printf("%c",c);
 	}
 
 }
-
