@@ -1,41 +1,51 @@
 /*
- * Ex3_Sum_Complex_Numbers_Structures.c
+ * main.c
  *
- *  Created on: Jul 19, 2021
+ *  Created on: Jan 16, 2024
  *      Author: Arsany
  */
 #include "stdio.h"
 
 struct SComplex
 {
-	float Real;
-	float Imaginary;
+	float real ;
+	float img;
 };
-
-struct SComplex add(struct SComplex a,struct SComplex b);
-
+struct SComplex sumComplex(struct SComplex z1,struct SComplex z2);
+struct SComplex readComplex();
+void printComplex(struct SComplex x);
 int main()
 {
-	struct SComplex a,b,sum;
-	printf("Enter information for 1st Complex number\n");
-	printf("Enter real and imaginary respectively: ");
-	fflush(stdin);fflush(stdout);
-	scanf("%f %f",&a.Real,&a.Imaginary);
-	printf("Enter information for 2nd Complex number\n");
-	printf("Enter real and imaginary respectively: ");
-	fflush(stdin);fflush(stdout);
-	scanf("%f %f",&b.Real,&b.Imaginary);
-	sum=add(a,b);
-	printf("\nSum= %.2f+%.2fi",sum.Real,sum.Imaginary);
+	struct SComplex x1,x2,sum;
+	sum.img=0;
+	x1=readComplex();
+	x2=readComplex();
+	sum=sumComplex(x1,x2);
+	printComplex(sum);
 	return 0;
+
 }
 
-struct SComplex add(struct SComplex a,struct SComplex b)
+struct SComplex sumComplex(struct SComplex z1,struct SComplex z2)
 {
-	struct SComplex sum;
-	sum.Real=a.Real+b.Real;
-	sum.Imaginary=a.Imaginary+b.Imaginary;
-	return sum;
+	z1.real+=z2.real;
+	z1.img+=z2.img;
+	return z1;
 }
+struct SComplex readComplex()
+{
+	struct SComplex x;
+	printf("Enter Real part of the number:\n");
+	fflush(stdin);fflush(stdout);
+	scanf("%f",&x.real);
+	printf("Enter imaginary part of the number:\n");
+	fflush(stdin);fflush(stdout);
+	scanf("%f",&x.img);
+	return x;
 
+}
+void printComplex(struct SComplex x)
+{
+	printf("Sum = %.2f + %.2fi",x.real,x.img);
+}
 
