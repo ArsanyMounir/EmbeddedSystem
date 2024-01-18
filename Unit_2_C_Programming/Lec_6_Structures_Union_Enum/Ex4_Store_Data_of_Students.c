@@ -1,10 +1,9 @@
 /*
- * Ex4_Store_Data_of_Students.c
+ * main.c
  *
- *  Created on: Jul 19, 2021
+ *  Created on: Jan 16, 2024
  *      Author: Arsany
  */
-
 #include "stdio.h"
 
 struct Sstudent{
@@ -12,7 +11,8 @@ struct Sstudent{
 	int roll;
 	float mark;
 };
-int main()
+
+void main()
 {
 	struct Sstudent students[10];
 	int i;
@@ -35,9 +35,5 @@ int main()
 		printf("Name: %s\n",students[i].name);
 		printf("Marks: %0.1f\n",students[i].mark);
 	}
-	return 0;
 
 }
-
-
-
