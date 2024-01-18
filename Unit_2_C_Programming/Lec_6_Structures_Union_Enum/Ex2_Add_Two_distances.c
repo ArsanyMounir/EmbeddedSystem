@@ -1,7 +1,7 @@
 /*
- * Ex2_Add_Two_distances.c
+ * main.c
  *
- *  Created on: Jul 19, 2021
+ *  Created on: Jan 16, 2024
  *      Author: Arsany
  */
 #include "stdio.h"
@@ -9,42 +9,47 @@
 struct SDistance
 {
 	int feet;
-	float inch;
+	float inches;
 };
-
-struct SDistance add(struct SDistance a,struct SDistance b);
-
+struct SDistance sumDistance(struct SDistance z1,struct SDistance z2);
+struct SDistance readDistance();
+void printDistance(struct SDistance x);
 int main()
 {
-	struct SDistance a,b,sum;
-	printf("Enter information for 1st distance\n");
-	printf("Enter feet: ");
-	fflush(stdin);fflush(stdout);
-	scanf("%d",&a.feet);
-	printf("Enter inch: ");
-	fflush(stdin);fflush(stdout);
-	scanf("%f",&a.inch);
-	printf("Enter information for 2nd distance\n");
-	printf("Enter feet: ");
-	fflush(stdin);fflush(stdout);
-	scanf("%d",&b.feet);
-	printf("Enter inch: ");
-	fflush(stdin);fflush(stdout);
-	scanf("%f",&b.inch);
-	sum=add(a,b);
-	printf("\n\nSum of distances = %d\',%.2f\"",sum.feet,sum.inch);
+	struct SDistance x1,x2,sum;
+	sum.feet=0;
+	x1=readDistance();
+	x2=readDistance();
+	sum=sumDistance(x1,x2);
+	printDistance(sum);
 	return 0;
-}
 
-struct SDistance add(struct SDistance a,struct SDistance b)
+}
+struct SDistance sumDistance(struct SDistance z1,struct SDistance z2)
 {
-	struct SDistance sum;
-	sum.feet=a.feet+b.feet;
-	sum.inch=a.inch+b.inch;
-	while(sum.inch>12.0)
-	{
-		sum.feet++;
-		sum.inch-=12.0;
-	}
-	return sum;
+	z1.feet+=z2.feet;
+	z1.inches+=z2.inches;
+	while(z1.inches/12>1)
+		{
+		z1.feet++;
+		z1.inches-=12;
+		}
+	return z1;
+}
+struct SDistance readDistance()
+{
+	struct SDistance x;
+	printf("Enter distance information:\n");
+	printf("Enter feet:");
+	fflush(stdin);fflush(stdout);
+	scanf("%d",&x.feet);
+	printf("Enter Inches:");
+	fflush(stdin);fflush(stdout);
+	scanf("%f",&x.inches);
+	return x;
+
+}
+void printDistance(struct SDistance x)
+{
+	printf("Sum of distances = %d' , %.2f\" ",x.feet,x.inches);
 }
