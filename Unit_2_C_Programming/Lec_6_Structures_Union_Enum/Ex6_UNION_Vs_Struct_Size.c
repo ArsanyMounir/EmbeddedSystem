@@ -1,7 +1,7 @@
 /*
- * Ex6_UNION_Vs_Struct_Size.c
+ * main.c
  *
- *  Created on: Jul 19, 2021
+ *  Created on: Jan 16, 2024
  *      Author: Arsany
  */
 #include "stdio.h"
