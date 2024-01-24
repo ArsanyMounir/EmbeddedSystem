@@ -1,30 +1,31 @@
 /*
- * Ex4_Print_Rev_array_using_pointer.c
+ * main.c
  *
- *  Created on: Jul 23, 2021
+ *  Created on: Jan 19, 2024
  *      Author: Arsany
  */
-#include "stdio.h"
-int main()
+
+#include"stdio.h"
+
+int main ()
 {
-	int arr[15],i,num;
-	int* ptr=arr;
-	printf("Input the number of elements to store in the array (max 15) :");
-	fflush(stdin);fflush(stdout);
-	scanf("%d",&num);
-	printf("Input %d number of elements in the array :\n",num);
-	for(i=0;i<num;i++,ptr++)
+	int arr[15],size,i;
+	int *ptr = arr;
+	printf("Input the number of elements to store in the array (max 15) : ");
+	fflush(stdout);
+	scanf("%d",&size);
+	printf("Input %d number of elements in the array : \n",size);
+	fflush(stdout);
+	for(i=0;i<size;i++)
 	{
-		printf("element %d :",i+1);
-		fflush(stdin);fflush(stdout);
-		scanf("%d",ptr);
+		printf("Element - %d :",i+1);
+		fflush(stdout);
+		scanf("%d",&arr[i]);
 	}
-	ptr--;
-	printf("\nThe elements of array in reverse order are :");
-	for(i=num;i>0;i--,ptr--)
+	printf("The elements of array in reverse order\n");
+	for(i=size-1;i>=0;i--)
 	{
-		printf("\nelement %d : %d",i,*ptr);
+		printf("Element - %d : %d\n",i+1,*(ptr+i));
 	}
 	return 0;
 }
-
