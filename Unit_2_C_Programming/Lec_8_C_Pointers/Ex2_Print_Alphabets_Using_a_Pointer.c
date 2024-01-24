@@ -1,26 +1,27 @@
 /*
- * Ex2_Print_Alphabets_Using_a_Pointer.c
+ * main.c
  *
- *  Created on: Jul 23, 2021
+ *  Created on: Jan 19, 2024
  *      Author: Arsany
  */
-#include "stdio.h"
-int main()
-{
-	char alphabets[26];
-	char*ptr=alphabets;
-	int i;
-	for(i=0;i<26;i++,ptr++)
-	{
-		*ptr=i+'a';
-	}
-	ptr=alphabets;
-	printf("Alphabets are:\n");
 
-	for(i=0;i<26;i++,ptr++)
+#include"stdio.h"
+
+int main ()
+{
+	char alphabet[26];
+	char*ptr = alphabet;
+	int i;
+	for(i=0;i<26;i++)
 	{
-		printf("%c  ",*ptr);
+		*ptr=i+'A';
+		ptr++;
+	}
+	ptr=alphabet;
+	printf("The Alphabets Are :");
+	for(i=0;i<26;i++)
+	{
+		printf("%c ", *ptr+i);
 	}
 	return 0;
 }
-
