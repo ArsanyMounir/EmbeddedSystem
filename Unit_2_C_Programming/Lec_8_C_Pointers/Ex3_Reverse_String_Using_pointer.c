@@ -1,28 +1,22 @@
 /*
- * Ex3_Reverse_String_Using_pointer.c
+ * main.c
  *
- *  Created on: Jul 23, 2021
+ *  Created on: Jan 19, 2024
  *      Author: Arsany
  */
-#include "stdio.h"
-#include "string.h"
-int main()
+
+#include"stdio.h"
+#include"string.h"
+int main ()
 {
 	char str[50];
-	char rev_str[50];
-	char* ptr=str;
-	int i;
-	printf("Input a string :");
-	fflush(stdin);fflush(stdout);
-	scanf("%s",str);
-	i=strlen(str);
-	ptr+=i-1;
-	for(i=0;i<strlen(str);i++,ptr--)
-	{
-		rev_str[i]=*ptr;
-	}
-	rev_str[i]='\0';
-	printf("Reverse of the string is : %s",rev_str);
+	char *ptr = str;
+	int size,i;
+	printf("Enter String :");
+	fflush(stdout);
+	gets(str);
+	size = strlen(str);
+	for(i=size-1;i>=0;i--)
+		printf("%c",*(ptr+i));
 	return 0;
 }
-
