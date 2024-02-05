@@ -1,7 +1,12 @@
+#include "stdio.h"
 #include "uart.h"
-unsigned char string_buffer[100]="Learn-In_Depth:<Arsany Ashraf>";
-unsigned char const string_buffer1[100]="Learn-In_Depth:<Arsany Ashraf>";
-void main(void)
+
+unsigned char string[100] = "Learn-In-Depth:<Arsany Ashraf>";
+
+int main ()
 {
-	UART_Send_string(string_buffer);
+
+	uart_send_string (string);
+
+	return 0;
 }

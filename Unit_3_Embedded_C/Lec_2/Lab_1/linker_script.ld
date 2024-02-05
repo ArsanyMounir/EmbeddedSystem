@@ -1,7 +1,7 @@
 ENTRY(reset)
 MEMORY
 {
-	Mem (rwx) : ORIGIN = 0x00000000, LENGTH = 64M
+	Mem (rwx) : o = 0x00000000, l = 64M
 }
 
 SECTIONS
@@ -10,19 +10,19 @@ SECTIONS
 	.startup . :
 	{
 		startup.o(.text)
-	}>Mem
+	}> Mem
 	.text :
 	{
-		*(.text) *(.rodata)
-	}>Mem
+		*(.text)
+	}> Mem
 	.data :
 	{
 		*(.data)
-	}>Mem
+	}> Mem
 	.bss :
 	{
-		*(.bss) *(COMMON)
-	}>Mem
-	. = . + 01000;
+		*(.bss)
+	}> Mem
+	. = . + 0x1000;
 	stack_top = . ;
 }
