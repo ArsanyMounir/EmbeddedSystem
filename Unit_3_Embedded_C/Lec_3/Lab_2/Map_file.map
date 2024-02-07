@@ -1,10 +1,4 @@
 
-Allocating common symbols
-Common symbol       size              file
-
-i                   0x4               startup.o
-bss_var             0x3               main.o
-
 Memory Configuration
 
 Name             Origin             Length             Attributes
@@ -15,85 +9,82 @@ sram             0x20000000         0x00005000         xrw
 Linker script and memory map
 
 
-.text           0x08000000      0x1cc
+.text           0x08000000      0x1bc
  *(.vectors*)
  .vectors       0x08000000       0x1c startup.o
                 0x08000000                vectors
- *(.text*)
- .text          0x0800001c       0xb4 main.o
-                0x0800001c                main
- .text          0x080000d0       0xf8 startup.o
-                0x080000d0                Bus_Fault_Handler
-                0x080000d0                H_Fault_Handler
-                0x080000d0                MM_Fault_Handler
-                0x080000d0                Usage_Fault_Handler
-                0x080000d0                Default_Handler
-                0x080000d0                NMI_Handler
-                0x080000dc                Reset_Handler
- *(.rodata*)
- .rodata        0x080001c8        0x4 main.o
-                0x080001c8                const_var
-                0x080001cc                _E_text = .
+ *(.text)
+ .text          0x0800001c       0xdc main.o
+                0x0800001c                NMI_Handler
+                0x08000028                Bus_fault_Handler
+                0x08000034                main
+ .text          0x080000f8       0xc0 startup.o
+                0x080000f8                Usage_fault_Handler
+                0x080000f8                H_fault_Handler
+                0x080000f8                Default_Handler
+                0x080000f8                MM_fault_Handler
+                0x08000104                Reset_Handler
+ *(.rodata)
+ .rodata        0x080001b8        0x4 main.o
+                0x080001b8                C_global_Var
+                0x080001bc                _E_text = .
 
-.glue_7         0x080001cc        0x0
+.glue_7         0x080001bc        0x0
  .glue_7        0x00000000        0x0 linker stubs
 
-.glue_7t        0x080001cc        0x0
+.glue_7t        0x080001bc        0x0
  .glue_7t       0x00000000        0x0 linker stubs
 
-.vfp11_veneer   0x080001cc        0x0
+.vfp11_veneer   0x080001bc        0x0
  .vfp11_veneer  0x00000000        0x0 linker stubs
 
-.v4_bx          0x080001cc        0x0
+.v4_bx          0x080001bc        0x0
  .v4_bx         0x00000000        0x0 linker stubs
 
-.iplt           0x080001cc        0x0
+.iplt           0x080001bc        0x0
  .iplt          0x00000000        0x0 main.o
 
-.rel.dyn        0x080001cc        0x0
+.rel.dyn        0x080001bc        0x0
  .rel.iplt      0x00000000        0x0 main.o
 
-.data           0x20000000        0x4 load address 0x080001cc
+.data           0x20000000        0xc load address 0x080001bc
                 0x20000000                _S_DATA = .
  *(.data)
- .data          0x20000000        0x4 main.o
-                0x20000000                g_variabled
- .data          0x20000004        0x0 startup.o
-                0x20000004                _E_DATA = .
+ .data          0x20000000        0xc main.o
+                0x20000000                R_ODR
+                0x20000004                R_CRH
+                0x20000008                global_Var
+ .data          0x2000000c        0x0 startup.o
+                0x2000000c                _E_DATA = .
 
-.igot.plt       0x20000004        0x0 load address 0x080001d0
+.igot.plt       0x2000000c        0x0 load address 0x080001c8
  .igot.plt      0x00000000        0x0 main.o
 
-.bss            0x20000004     0x1008 load address 0x080001d0
-                0x20000004                _S_bss = .
+.bss            0x2000000c     0x1000 load address 0x080001c8
+                0x2000000c                _S_bss = .
  *(.bss)
- .bss           0x20000004        0x0 main.o
- .bss           0x20000004        0x0 startup.o
-                0x20000004                _E_bss = .
-                0x20000004                . = ALIGN (0x4)
-                0x20001004                . = (. + 0x1000)
- *fill*         0x20000004     0x1000 
-                0x20001004                _stack_top = .
- COMMON         0x20001004        0x3 main.o
-                0x20001004                bss_var
- *fill*         0x20001007        0x1 
- COMMON         0x20001008        0x4 startup.o
-                0x20001008                i
+ .bss           0x2000000c        0x0 main.o
+ .bss           0x2000000c        0x0 startup.o
+                0x2000000c                . = ALIGN (0x4)
+                0x2000000c                _E_bss = .
+                0x2000100c                . = (. + 0x1000)
+ *fill*         0x2000000c     0x1000 
+                0x2000100c                _stack_top = .
 LOAD main.o
 LOAD startup.o
 OUTPUT(LED_TOGGLE.elf elf32-littlearm)
 
-.debug_info     0x00000000      0x25f
- .debug_info    0x00000000       0xf4 main.o
- .debug_info    0x000000f4      0x16b startup.o
+.debug_info     0x00000000      0x366
+ .debug_info    0x00000000      0x1fa main.o
+ .debug_info    0x000001fa      0x16c startup.o
 
-.debug_abbrev   0x00000000      0x14e
- .debug_abbrev  0x00000000       0x8c main.o
- .debug_abbrev  0x0000008c       0xc2 startup.o
+.debug_abbrev   0x00000000      0x1c2
+ .debug_abbrev  0x00000000       0xfb main.o
+ .debug_abbrev  0x000000fb       0xc7 startup.o
 
-.debug_loc      0x00000000       0x9c
- .debug_loc     0x00000000       0x38 main.o
- .debug_loc     0x00000038       0x64 startup.o
+.debug_loc      0x00000000       0xf4
+ .debug_loc     0x00000000       0x90 main.o
+ .debug_loc     0x00000090       0x64 startup.o
 
 .debug_aranges  0x00000000       0x40
  .debug_aranges
@@ -101,15 +92,15 @@ OUTPUT(LED_TOGGLE.elf elf32-littlearm)
  .debug_aranges
                 0x00000020       0x20 startup.o
 
-.debug_line     0x00000000      0x147
- .debug_line    0x00000000       0x9b main.o
- .debug_line    0x0000009b       0xac startup.o
+.debug_line     0x00000000      0x10c
+ .debug_line    0x00000000       0x5d main.o
+ .debug_line    0x0000005d       0xaf startup.o
 
-.debug_str      0x00000000      0x157
- .debug_str     0x00000000       0xd7 main.o
-                                0x10b (size before relaxing)
- .debug_str     0x000000d7       0x80 startup.o
-                                0x161 (size before relaxing)
+.debug_str      0x00000000      0x1b5
+ .debug_str     0x00000000      0x135 main.o
+                                0x174 (size before relaxing)
+ .debug_str     0x00000135       0x80 startup.o
+                                0x17c (size before relaxing)
 
 .comment        0x00000000       0x11
  .comment       0x00000000       0x11 main.o
@@ -123,6 +114,6 @@ OUTPUT(LED_TOGGLE.elf elf32-littlearm)
  .ARM.attributes
                 0x00000033       0x33 startup.o
 
-.debug_frame    0x00000000       0x78
- .debug_frame   0x00000000       0x2c main.o
- .debug_frame   0x0000002c       0x4c startup.o
+.debug_frame    0x00000000       0xa8
+ .debug_frame   0x00000000       0x5c main.o
+ .debug_frame   0x0000005c       0x4c startup.o

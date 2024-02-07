@@ -1,4 +1,3 @@
-#@copyright : Arsany
 CC=arm-none-eabi-
 CFLAGS=-mthumb -mcpu=cortex-m3 -gdwarf-2
 INCS=-I .
