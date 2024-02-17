@@ -1,4 +1,3 @@
-#@copyright : Arsany
 CC=arm-none-eabi-
 CFLAGS=-mthumb -mcpu=cortex-m4 -gdwarf-2 -g
 INCS=-I .
@@ -8,7 +7,7 @@ OBJ = $(SRC:.c=.o)
 As = $(wildcard *.s)
 AsOBJ = $(As:.s=.o)
 
-Project_name=Lab3_CortexM4
+Project_name = Tiva_C_Lab
 
 all: $(Project_name).bin
 	@echo "================================Build is Done================================"
@@ -19,7 +18,6 @@ all: $(Project_name).bin
 $(Project_name).elf: $(OBJ) $(AsOBJ)
 	$(CC)ld.exe -T linker_script.ld $(LIBS) $(OBJ) $(AsOBJ) -o $@ -Map=Map_file.map
 	cp $(Project_name).elf $(Project_name).axf
-
 $(Project_name).bin: $(Project_name).elf
 	$(CC)objcopy.exe -O binary $< $@
 
