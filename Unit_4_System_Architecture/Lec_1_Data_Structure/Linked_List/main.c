@@ -1,314 +1,49 @@
 /*
  * main.c
  *
- *  Created on: Aug 16, 2021
+ *  Created on: Feb 26, 2024
  *      Author: Arsany
  */
 #include "stdio.h"
-#include "stdint.h"
-#include "conio.h"
-#include "string.h"
-#include "math.h"
+#include "stdlib.h"
 #define DPRINTF(...) printf(__VA_ARGS__);fflush(stdout);fflush(stdin)
 
-struct Sdata
-{
+typedef struct {
 	int ID;
 	char name[40];
-	int height;
-};
+	float height;
+}Sdata ;
 
-struct SStudent
-{
-	struct Sdata Student;
-	struct SStudent* ptrNextStudent;
-};
+typedef struct {
+	Sdata student;
+	struct SStudent *pNextStudent;
+}SStudent;
 
-struct SStudent* gPtrFirstStudent = NULL;
+SStudent * gpFirstStudent = NULL ;
 
 //APIs
-//Add Student
-void AddStudent()
-{
-	struct SStudent* ptrNewStudent;
-	struct SStudent* ptrLastStudent;
-	char temp[40];
-	//check if list is empty
-	if (gPtrFirstStudent == NULL)
-	{
-		//create
-		ptrNewStudent = (struct SStudent*) malloc (sizeof(struct SStudent));
-		//assign it to gPtrFirstStudent
-		gPtrFirstStudent = ptrNewStudent;
-	}
-	//list contains records
-	else
-	{
-		//find last record
-		ptrLastStudent=gPtrFirstStudent;
-		while(ptrLastStudent->ptrNextStudent)
-		{
-			ptrLastStudent=ptrLastStudent->ptrNextStudent;
-		}
-		ptrNewStudent=(struct SStudent*) malloc (sizeof(struct SStudent));
-		ptrLastStudent->ptrNextStudent=ptrNewStudent;
-	}
-	DPRINTF("\nEnter the ID:");
-	gets(temp);
-	ptrNewStudent->Student.ID = atoi(temp);
-	DPRINTF("\nEnter the student Full Name:");
-	gets(ptrNewStudent->Student.name);
-	DPRINTF("\nEnter height:");
-	gets(temp);
-	ptrNewStudent->Student.height= atoi(temp);
-	ptrNewStudent->ptrNextStudent=NULL;
-}
-
-//delete
-int DeleteStudent()
-{
-	char temp[40];
-	int i , wanted_ID;
-	DPRINTF("\nEnter Student ID to be Deleted: ");
-	gets(temp);
-	wanted_ID = atoi(temp);
-	if(gPtrFirstStudent)
-	{
-		struct SStudent* ptrPrevStudent=NULL;
-		struct SStudent* ptrSelectedStudent=gPtrFirstStudent;
-		while(ptrSelectedStudent)
-		{
-			if(ptrSelectedStudent->Student.ID == wanted_ID)
-			{
-				if(ptrPrevStudent)
-				{
-					ptrPrevStudent->ptrNextStudent=ptrSelectedStudent->ptrNextStudent;
-				}
-				else
-				{
-					gPtrFirstStudent=ptrSelectedStudent->ptrNextStudent;
-				}
-				free(ptrSelectedStudent);
-				return 1;
-			}
-			ptrPrevStudent=ptrSelectedStudent;
-			ptrSelectedStudent=ptrSelectedStudent->ptrNextStudent;
-
-		}
-
-	}
-	DPRINTF("\nID Not Found");
-	return 0;
-}
-//delete all
-void DeleteAll()
-{
-	struct SStudent* ptrCurrentStudent=gPtrFirstStudent;
-	struct SStudent* ptrTemp;
-	if(gPtrFirstStudent==NULL)
-	{
-		DPRINTF("\nEMPTY List");
-	}
-	else
-	{
-		while(ptrCurrentStudent)
-		{
-			ptrTemp=ptrCurrentStudent;
-			ptrCurrentStudent=ptrCurrentStudent->ptrNextStudent;
-			free(ptrTemp);
-		}
-		gPtrFirstStudent=NULL;
-	}
-}
-//view
-void ViewStudents()
-{
-	int counter=0;
-	struct SStudent* ptrCurrentStudent=gPtrFirstStudent;
-	if(gPtrFirstStudent==NULL)
-	{
-		DPRINTF("\nEMPTY List");
-	}
-	else
-	{
-		while(ptrCurrentStudent)
-		{
-			DPRINTF("\nRecord Number %d",counter+1);
-			DPRINTF("\nID :%d",ptrCurrentStudent->Student.ID);
-			DPRINTF("\nName: %s",ptrCurrentStudent->Student.name);
-			DPRINTF("\nHeight: %d",ptrCurrentStudent->Student.height);
-			ptrCurrentStudent=ptrCurrentStudent->ptrNextStudent;
-			counter++;
-		}
-	}
-}
-//reverse
-void reverse()
-{
-	if(gPtrFirstStudent==NULL)
-	{
-		DPRINTF("\nEMPTY List");
-	}
-	else
-	{
-		struct SStudent* ptrCurrentStudent=gPtrFirstStudent->ptrNextStudent;
-		struct SStudent* ptrPrevStudent=gPtrFirstStudent;
-		struct SStudent* ptrNext=NULL;
-		while(ptrCurrentStudent){
-			ptrNext=ptrCurrentStudent->ptrNextStudent;
-			ptrCurrentStudent->ptrNextStudent=ptrPrevStudent;
-			ptrPrevStudent=ptrCurrentStudent;
-			ptrCurrentStudent=ptrNext;
-		}
-		gPtrFirstStudent->ptrNextStudent=NULL;
-		gPtrFirstStudent=ptrPrevStudent;
-
-	}
-
-}
-//middle
-void mid()
-{
-	int counter=0;
-	struct SStudent* ptrCurrentStudent=gPtrFirstStudent;
-	if(gPtrFirstStudent==NULL)
-	{
-		DPRINTF("\nEMPTY List");
-	}
-	else
-	{
-		int mid =ceil(length_R(gPtrFirstStudent)/2);
-		while(counter!=mid)
-		{
-			counter++;
-			ptrCurrentStudent=ptrCurrentStudent->ptrNextStudent;
-		}
-		DPRINTF("\n\tMid of List");
-		DPRINTF("\nID :%d",ptrCurrentStudent->Student.ID);
-		DPRINTF("\nName: %s",ptrCurrentStudent->Student.name);
-		DPRINTF("\nHeight: %d",ptrCurrentStudent->Student.height);
-	}
-}
-
-//nth node
-void GetNth()
-{
-	int count=0,wanted_node;
-	char temp[10];
-	struct SStudent* ptrCurrentStudent=gPtrFirstStudent;
-	if(gPtrFirstStudent==NULL)
-	{
-		DPRINTF("\nEMPTY List");
-	}
-	else
-	{
-		DPRINTF("\nEnter Nth position wanted");
-		gets(temp);
-		wanted_node=atoi(temp);
-		while(wanted_node!=count)
-		{
-			ptrCurrentStudent=ptrCurrentStudent->ptrNextStudent;
-			count++;
-		}
-		if(ptrCurrentStudent==NULL)
-		{
-			DPRINTF("\nNth position not found");
-		}
-		else
-		{
-			DPRINTF("\nID :%d",ptrCurrentStudent->Student.ID);
-			DPRINTF("\nName: %s",ptrCurrentStudent->Student.name);
-			DPRINTF("\nHeight: %d",ptrCurrentStudent->Student.height);
-		}
-	}
-}
-//length itrative
-void length_I()
-{
-	int count=0;
-	struct SStudent* ptrCurrentStudent=gPtrFirstStudent;
-	if(gPtrFirstStudent==NULL)
-	{
-		DPRINTF("\nEMPTY List");
-	}
-	else
-	{
-		while(ptrCurrentStudent)
-		{
-			count++;
-			ptrCurrentStudent=ptrCurrentStudent->ptrNextStudent;
-		}
-		DPRINTF("length = %d",count);
-	}
-}
-//length recersive
-int length_R(struct SStudent*check)
-{
-	if(check)
-		return 1+length_R(check->ptrNextStudent);
-	else
-		return 0;
-}
-//nth node from end
-void nth_end()
-{
-	if(gPtrFirstStudent==NULL)
-	{
-		DPRINTF("\nEMPTY List");
-	}
-	else
-	{
-		int end=length_R(gPtrFirstStudent);
-		int index=0;
-		struct SStudent* temp=gPtrFirstStudent;
-		DPRINTF("\nenter the index from end :");
-		scanf("%d",&index);
-		index=end-index;
-		while(index)
-		{
-			index--;
-			temp=temp->ptrNextStudent;
-		}
-		DPRINTF("\nID :%d",temp->Student.ID);
-		DPRINTF("\nName: %s",temp->Student.name);
-		DPRINTF("\nHeight: %d",temp->Student.height);
-	}
+void AddStudent();
+int DeleteStudent();
+void printList();
+void DeleteAll();
+void GetNthNode();
+void lengthIterative();
+int lengthRecursive(SStudent* pCurrentStudent);
+void GetNthNodeEndIterative();
+void GetNthNodeEndptr();
+void mid();
+int loop();
+void reverse();
 
 
-}
 
-//detect loop
-int loop()
-{
-	if(gPtrFirstStudent==NULL)
-	{
-		DPRINTF("\nEMPTY List");
-	}
-	else
-	{
-		struct SStudent* ptrSlow;
-		struct SStudent* ptrFast;
-		ptrSlow=gPtrFirstStudent;
-		ptrFast=gPtrFirstStudent;
-		while(ptrSlow&&ptrFast&&ptrFast->ptrNextStudent)
-		{
-			ptrSlow=ptrSlow->ptrNextStudent;
-			ptrFast=ptrFast->ptrNextStudent->ptrNextStudent;
-			if(ptrSlow==ptrFast)
-			{
-				DPRINTF("\nThere is Loop");
-				return 1;
-			}
-		}
-	}
-	return 0;
-}
+
 int main()
 {
 	char temp[40];
 	while(1)
 	{
-		DPRINTF("\n============================");
+		DPRINTF("\n============================\n");
 		DPRINTF("\n\tChoose one of the following options ");
 		DPRINTF("\n1: Add student ");
 		DPRINTF("\n2: Delete student ");
@@ -319,30 +54,401 @@ int main()
 		DPRINTF("\n7: nth node ");
 		DPRINTF("\n8: List length (iterative Function)");
 		DPRINTF("\n9: List length (recursive Function)");
-		DPRINTF("\n10: Nth node from the end");
-		DPRINTF("\n11: Detect Loop");
+		DPRINTF("\n10: Nth node from the end (Using list length)");
+		DPRINTF("\n11: Nth node from the end (Using Sliding window Pointer)");
+		DPRINTF("\n12: Detect Loop");
 		DPRINTF("\nEnter 0 to exit ");
 		DPRINTF("\nEnter your option: ");
 		gets(temp);
-		DPRINTF("\n============================");
+		DPRINTF("\n============================\n");
 		switch(atoi(temp))
 		{
 		case 0: return 0; break;
 		case 1: AddStudent();break;
 		case 2: DeleteStudent();break;
 		case 3: DeleteAll();break;
-		case 4: ViewStudents();break;
+		case 4: printList();break;
 		case 5: reverse();break;
 		case 6: mid();break;
-		case 7: GetNth();break;
-		case 8: length_I();break;
-		case 9: DPRINTF("length = %d",length_R(gPtrFirstStudent));break;
-		case 10:nth_end();break;
-		case 11:if(!loop())DPRINTF("\nNO LOOP");break;
+		case 7: GetNthNode();break;
+		case 8: lengthIterative();break;
+		case 9: DPRINTF("length = %d",lengthRecursive(gpFirstStudent));break;
+		case 10:GetNthNodeEndIterative();break;
+		case 11:GetNthNodeEndptr();break;
+		case 12:if(!loop())DPRINTF("\nNO LOOP");break;
 		default:
-			DPRINTF("\ninvalid entry");break;
+			DPRINTF("\n invalid entry");break;
 		}
 	}
 	return 0;
+
+
 }
 
+
+
+void AddStudent()
+{
+	SStudent* pNewStudent;
+	SStudent* pLastStudent;
+	char temp_text[40];
+	//Check if Linked List is empty
+	if(gpFirstStudent == NULL)
+	{
+		pNewStudent = (SStudent *) malloc(sizeof(SStudent));
+
+		if(!pNewStudent)
+		{
+			DPRINTF("Error in allocating memory for data");
+		}
+		else
+		{
+			gpFirstStudent = pNewStudent;
+		}
+	}
+	else
+	{
+		pLastStudent = gpFirstStudent;
+		while(pLastStudent->pNextStudent)
+		{
+			pLastStudent=(SStudent*) pLastStudent->pNextStudent;
+		}
+
+		pNewStudent = (SStudent *) malloc(sizeof(SStudent));
+
+		if(!pNewStudent)
+		{
+			DPRINTF("Error in allocating memory for data");
+		}
+		else
+		{
+			pLastStudent->pNextStudent =  pNewStudent;
+
+		}
+
+	}
+	DPRINTF(" Enter the ID: \n");
+	gets(temp_text);
+	pNewStudent->student.ID = atoi(temp_text);
+	DPRINTF(" Enter student full name:");
+	gets(pNewStudent->student.name);
+	DPRINTF(" Enter student height :");
+	gets(temp_text);
+	pNewStudent->student.height = atof(temp_text);
+
+
+
+	pNewStudent->pNextStudent = NULL;
+
+
+}
+
+int DeleteStudent()
+{
+	char temp_text[40];
+	unsigned int sID;
+	DPRINTF("Enter the ID to be deleted");
+	gets(temp_text);
+	sID = atoi(temp_text);
+	if(gpFirstStudent)
+	{
+		SStudent* pPrevStudent = NULL;
+		SStudent* pSelectedStudent = gpFirstStudent;
+		while(pSelectedStudent)
+		{
+			if(pSelectedStudent->student.ID == sID)
+			{
+				if(pPrevStudent)
+				{
+					pPrevStudent->pNextStudent=pSelectedStudent->pNextStudent;
+				}
+				else
+				{
+					gpFirstStudent= (SStudent*) pSelectedStudent->pNextStudent;
+				}
+				free(pSelectedStudent);
+				return 1;
+			}
+			else
+			{
+				pPrevStudent=pSelectedStudent;
+				pSelectedStudent= (SStudent*) pSelectedStudent->pNextStudent;
+
+			}
+
+		}
+
+	}
+	else
+	{
+		DPRINTF("Error List is Empty\n");
+		return 0;
+	}
+
+	DPRINTF("Error ID not found in List\n");
+	return 0;
+}
+
+
+void printList()
+{
+	SStudent* pCurrentStudent = gpFirstStudent;
+	unsigned int count = 0;
+	if(gpFirstStudent)
+	{
+		while(pCurrentStudent)
+		{
+			DPRINTF("Data number %d \n",count+1);
+			DPRINTF("ID: %d \n",pCurrentStudent->student.ID);
+			DPRINTF("Name: %s \n",pCurrentStudent->student.name);
+			DPRINTF("Height: %f \n",pCurrentStudent->student.height);
+			pCurrentStudent=(SStudent*) pCurrentStudent->pNextStudent;
+			count++;
+
+		}
+	}
+	else
+	{
+		DPRINTF("Error List is Empty");
+	}
+
+
+}
+
+void DeleteAll()
+{
+	SStudent* pCurrentStudent = gpFirstStudent;
+	if(gpFirstStudent)
+	{
+		while(pCurrentStudent)
+		{
+			SStudent* temp = pCurrentStudent;
+			pCurrentStudent =(SStudent*) pCurrentStudent->pNextStudent;
+			free(temp);
+		}
+	}
+	else
+	{
+		DPRINTF("Error List is Empty\n");
+	}
+	gpFirstStudent= NULL;
+}
+
+
+
+void GetNthNode()
+{
+	unsigned int count = 0,input;
+	char temp[10];
+	SStudent* pCurrentStudent = gpFirstStudent;
+	if(gpFirstStudent)
+	{
+		DPRINTF("\n Enter nth index wanted");
+		gets(temp);
+		input = atoi(temp);
+		while(count!=input)
+		{
+			pCurrentStudent=(SStudent* ) pCurrentStudent->pNextStudent;
+			count++;
+		}
+		if(!pCurrentStudent)
+		{
+			DPRINTF("index %d Not found \n",input);
+		}
+		else
+		{
+			DPRINTF("ID: %d \n",pCurrentStudent->student.ID);
+			DPRINTF("Name: %s \n",pCurrentStudent->student.name);
+			DPRINTF("Height: %f \n",pCurrentStudent->student.height);
+		}
+	}
+	else
+	{
+		DPRINTF("Error List is Empty\n");
+	}
+
+}
+
+void lengthIterative()
+{
+	unsigned int count=1;
+	SStudent* pCurrentStudent = gpFirstStudent;
+	if(gpFirstStudent)
+	{
+		while(pCurrentStudent->pNextStudent)
+		{
+			pCurrentStudent=(SStudent* ) pCurrentStudent->pNextStudent;
+			count++;
+		}
+		DPRINTF("linked list length = %d ",count);
+	}
+	else
+	{
+		DPRINTF("Error List is Empty\n");
+	}
+
+}
+
+
+
+int lengthRecursive(SStudent* pCurrentStudent)
+{
+	if(!pCurrentStudent->pNextStudent)
+	{
+		return 1;
+	}
+	else
+	{
+		return 1 + lengthRecursive((SStudent*) pCurrentStudent->pNextStudent);
+	}
+}
+
+void GetNthNodeEndIterative()
+{
+	unsigned int count=0;
+	unsigned int end = lengthRecursive(gpFirstStudent);
+	SStudent* pCurrentStudent = gpFirstStudent;
+	DPRINTF("Enter Index needed from the end\n");
+	scanf("%d",&count);
+	count = end - count;
+	if(gpFirstStudent)
+	{
+		while(count)
+		{
+			pCurrentStudent=(SStudent* ) pCurrentStudent->pNextStudent;
+			count--;
+		}
+		DPRINTF("ID: %d \n",pCurrentStudent->student.ID);
+		DPRINTF("Name: %s \n",pCurrentStudent->student.name);
+		DPRINTF("Height: %f \n",pCurrentStudent->student.height);
+	}
+	else
+	{
+		DPRINTF("Error List is Empty\n");
+	}
+}
+
+
+void GetNthNodeEndptr()
+{
+	unsigned int count=1,place;
+	SStudent* pFast = gpFirstStudent;
+	SStudent* pSlow = gpFirstStudent;
+	DPRINTF("Enter Index needed from the end\n");
+	scanf("%d",&place);
+	if(gpFirstStudent)
+	{
+		while(pFast->pNextStudent)
+		{
+			if(count>=place)
+			{
+				count++;
+				pFast = (SStudent* ) pFast->pNextStudent;
+				pSlow = (SStudent* ) pSlow->pNextStudent;
+			}
+			else
+			{
+				count++;
+				pFast = (SStudent* )pFast->pNextStudent;
+			}
+		}
+		DPRINTF("ID: %d \n",pSlow->student.ID);
+		DPRINTF("Name: %s \n",pSlow->student.name);
+		DPRINTF("Height: %f \n",pSlow->student.height);
+	}
+	else
+	{
+		DPRINTF("Error List is Empty\n");
+	}
+}
+
+
+
+void mid()
+{
+	SStudent* pFast = gpFirstStudent;
+	SStudent* pSlow = gpFirstStudent;
+	if(gpFirstStudent)
+	{
+		while(pFast->pNextStudent)
+		{
+			pFast=(SStudent *) pFast->pNextStudent;
+			if(!pFast->pNextStudent)
+			{
+				break;
+			}
+			else
+			{
+				pFast=(SStudent *) pFast->pNextStudent;
+			}
+
+			pSlow =(SStudent *) pSlow->pNextStudent;
+		}
+		DPRINTF("ID: %d \n",pSlow->student.ID);
+		DPRINTF("Name: %s \n",pSlow->student.name);
+		DPRINTF("Height: %f \n",pSlow->student.height);
+	}
+	else
+	{
+		DPRINTF("Error List is Empty\n");
+	}
+
+}
+
+
+int loop()
+{
+	SStudent* pFast = gpFirstStudent;
+	SStudent* pSlow = gpFirstStudent;
+	if(gpFirstStudent)
+	{
+		while(pFast&&pSlow&&pFast->pNextStudent)
+		{
+			pSlow =(SStudent *) pSlow->pNextStudent;
+			pFast=(SStudent *) pFast->pNextStudent;
+			pFast=(SStudent *) pFast->pNextStudent;
+			if(pSlow==pFast)
+			{
+				DPRINTF("There is Loop");
+				return 1;
+
+			}
+
+		}
+	}
+	else
+	{
+		DPRINTF("Error List is Empty\n");
+	}
+
+
+	return 0;
+}
+
+
+void reverse()
+{
+	SStudent* pCurrentStudent = (SStudent*) gpFirstStudent->pNextStudent;
+	SStudent* pPrevStudent = gpFirstStudent;
+	SStudent* pNextStudent = NULL;
+	if(gpFirstStudent)
+	{
+		while(pCurrentStudent)
+		{
+			pNextStudent = (SStudent *) pCurrentStudent->pNextStudent;
+			pCurrentStudent->pNextStudent=pPrevStudent;
+			pPrevStudent = pCurrentStudent;
+			pCurrentStudent = pNextStudent;
+		}
+		gpFirstStudent->pNextStudent = NULL;
+		gpFirstStudent=pPrevStudent;
+	}
+	else
+	{
+		DPRINTF("Error List is Empty\n");
+	}
+
+	DPRINTF("Reverse Complete\n");
+
+
+}
