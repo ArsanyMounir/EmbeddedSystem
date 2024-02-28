@@ -1,67 +1,81 @@
 /*
- * lifo.c
+ * LIFO.c
  *
- *  Created on: Aug 14, 2021
+ *  Created on: Feb 25, 2024
  *      Author: Arsany
  */
-#include"lifo.h"
-#include"stdio.h"
 
-
-
-
-//APIs Implementation
-
-//Adding item to the LIFO Buffer
-LIFO_Status LIFO_Add_item (LIFO_Buffer* LIFO_Buf, USER_DATA_TYPE item)
-{
-	//check LIFO is valid
-	if(!LIFO_Buf->base||!LIFO_Buf->head)
-		return LIFO_NULL;
-	//checking if LIFO is FULL
-	if(LIFO_Buf->count==LIFO_Buf->length)
-		return LIFO_Full;
-	//adding the item
-	*(LIFO_Buf->head)=item;
-	//adjusting the head pointer position to next location in Buffer
-	LIFO_Buf->head++;
-	//incrementing count
-	LIFO_Buf->count++;
-	return LIFO_No_Error;
-
-}
-
-
-//getting an item from LIFO Buffer
-LIFO_Status LIFO_get_item (LIFO_Buffer* LIFO_Buf, USER_DATA_TYPE* item)
-{
-	//check LIFO is valid
-	if(!LIFO_Buf->base||!LIFO_Buf->head)
-		return LIFO_NULL;
-	//checking if LIFO is Empty
-	if(LIFO_Buf->count==0)
-		return LIFO_Empty;
-	//adjusting the head pointer position to previous location in Buffer
-	LIFO_Buf->head--;
-	*item= *(LIFO_Buf->head);
-	//decrementing count
-	LIFO_Buf->count--;
-	return LIFO_No_Error;
-
-}
+#include "stdio.h"
+#include "LIFO.h"
 
 //Creating a new LIFO Buffer
-LIFO_Status LIFO_Init (LIFO_Buffer* LIFO_Buf, USER_DATA_TYPE* buffer,unsigned int length)
+LIFO_State LIFO_init(LIFO_Buf_t* lifo_buf , USER_DATA_TYPE* buf , unsigned int size )
 {
-	//checking for dynamic allocation if null
-	if(buffer==NULL)
+	//Checking for address given if null
+	if (buf == NULL)
+	{
 		return LIFO_NULL;
-
-	LIFO_Buf->base=buffer;
-	LIFO_Buf->head=buffer;
-	LIFO_Buf->length=length;
-	LIFO_Buf->count=0;
-
-	return LIFO_No_Error ;
+	}
+	//initializing components of the LIFO Buffer.
+	lifo_buf->base = buf;
+	lifo_buf->head = buf;
+	lifo_buf->length = size;
+	lifo_buf->count = 0;
+	return LIFO_NOERROR;
 }
+
+
+
+//Adding item to the top of the LIFO Buffer
+LIFO_State LIFO_push(LIFO_Buf_t* lifo_buf , USER_DATA_TYPE item)
+{
+
+	//Checking if given LIFO buffer is valid
+	if(!lifo_buf->base || !lifo_buf->head)
+	{
+		return LIFO_NULL;
+	}
+
+	//Checking if given LIFO buffer is FULL
+	if(lifo_buf->count==lifo_buf->length)
+	{
+		return LIFO_FULL;
+	}
+
+	//Adding item to current head location
+	*(lifo_buf->head) = item;
+	//Adjusting the head pointer position to the next location
+	lifo_buf->head ++;
+	//Incrementing count
+	lifo_buf->count ++;
+
+	return LIFO_NOERROR;
+}
+
+//Removing item from the LIFO Buffer
+LIFO_State LIFO_pop(LIFO_Buf_t* lifo_buf , USER_DATA_TYPE *item)
+{
+	//Checking if given LIFO buffer is valid
+	if(!lifo_buf->base || !lifo_buf->head)
+	{
+		return LIFO_NULL;
+	}
+
+	//Checking if given LIFO buffer is EMPTY
+	if(lifo_buf->count==0)
+	{
+		return LIFO_EMPTY;
+	}
+
+	/*Moving head pointer one place to the data needed ,
+	since in the push function the last head position is empty/garbage ,
+	so we need to adjust to retrieve data*/
+	lifo_buf->head--;
+	//Decrementing Count
+	lifo_buf->count--;
+	//point item to the data needed
+	*item = *(lifo_buf->head);
+	return LIFO_NOERROR;
+}
+
 

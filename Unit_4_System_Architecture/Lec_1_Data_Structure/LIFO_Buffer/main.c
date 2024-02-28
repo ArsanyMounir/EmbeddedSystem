@@ -1,52 +1,58 @@
 /*
  * main.c
  *
- *  Created on: Aug 14, 2021
+ *  Created on: Feb 25, 2024
  *      Author: Arsany
  */
-#include "lifo.h"
+
 #include "stdio.h"
-#include "stdint.h"
+#include "stdlib.h"
+#include "LIFO.h"
 
 
-void main()
+
+int main ()
 {
-	USER_DATA_TYPE i,temp=0;
-	LIFO_Buffer uart_LIFO;
-	//static allocation
-	LIFO_Init(&uart_LIFO ,buffer ,5);
+	int i;
+	USER_DATA_TYPE temp=0;
+	LIFO_Buf_t UART_LIFO ;
+	//statically allocated LIFO buffer
+	LIFO_init(&UART_LIFO,buffer,width);
 	for(i=0;i<7;i++)
 	{
-		if(LIFO_Add_item(&uart_LIFO,i)==LIFO_No_Error)
-			printf("UART_LIFO add item: %d\n",i);
+		if (LIFO_push(&UART_LIFO,i)==LIFO_NOERROR)
+		{
+			printf("UART_LIFO Push : %d \n",i);
+		}
 		else
 		{
-			switch(LIFO_Add_item(&uart_LIFO,i))
+			switch (LIFO_push(&UART_LIFO,i))
 			{
-			case LIFO_Empty:printf("\n=================ERROR LIFO IS EMPTY=================\n");break;
-			case LIFO_NULL:printf("\n=================ERROR LIFO IS NULL=================\n");break;
-			case LIFO_Full:printf("\n=================ERROR LIFO IS FULL=================\n");break;
+			case LIFO_NULL:printf("ERROR LIFO IS NULL \n");break;
+			case LIFO_FULL:	printf("ERROR LIFO IS FULL \n");break;
 			}
 		}
 	}
+	printf("===================================\n");
 	for(i=0;i<7;i++)
 	{
-		if(LIFO_get_item(&uart_LIFO,&temp)==LIFO_No_Error)
-			printf("UART_LIFO get item: %d\n",temp);
+		if (LIFO_pop(&UART_LIFO,&temp)==LIFO_NOERROR)
+		{
+			printf("UART_LIFO Push : %d \n",i);
+		}
 		else
 		{
-			switch(LIFO_get_item(&uart_LIFO,&temp))
+			switch (LIFO_pop(&UART_LIFO,&temp))
 			{
-			case LIFO_Empty:printf("\n=================ERROR LIFO IS EMPTY=================\n");break;
-			case LIFO_NULL:printf("\n=================ERROR LIFO IS NULL=================\n");break;
-			case LIFO_Full:printf("\n=================ERROR LIFO IS FULL=================\n");break;
+			case LIFO_NULL:printf("ERROR LIFO IS NULL \n");break;
+			case LIFO_EMPTY:printf("ERROR LIFO IS EMPTY \n");break;
 			}
 		}
 	}
+	printf("===================================\n");
 
 
 
 
-
+	return 0;
 }
-
