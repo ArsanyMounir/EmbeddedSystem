@@ -1,45 +1,49 @@
 /*
  * DC.c
  *
- *  Created on: Aug 17, 2021
- *      Author: Arshy
+ *  Created on: Feb 29, 2024
+ *      Author: Arsany
  */
+
 #include "DC.h"
 
-int DC_speed=0;
-
-void (*DC_state)();
+//Global variables
+int DC_speed = 0;
+void (*DC_STATE)();
 
 
 void DC_init()
 {
+	//init PWM
 	printf("DC_init\n");
 }
 
 void DC_motor(int s)
 {
-	DC_speed=s;
-	DC_state=STATE(DC_busy);
+	DC_speed = s;
 	printf("\nCA ---------speed = %d-----------> DC\n",DC_speed);
+	DC_STATE = STATE(DC_busy);
+
 }
 
-STATE_define(DC_idle)
+
+
+STATE_DEFINE(DC_idle)
 {
-	DC_State_ID =DC_idle;
-
+	//State Name
+	DC_STATE_ID = DC_idle;
 	//call PWM to make speed = DC_speed
-
 	printf("\nDC_idle State: speed =%d",DC_speed);
 
 }
 
-STATE_define(DC_busy)
+STATE_DEFINE(DC_busy)
 {
-	DC_State_ID =DC_busy;
+	//State Name
+	DC_STATE_ID = DC_busy;
 	//call PWM to make speed = DC_speed
 	printf("\nDC_busy State: speed =%d",DC_speed);
-	DC_state=STATE(DC_idle);
+	DC_STATE=STATE(DC_idle);
+
 }
-
-
 

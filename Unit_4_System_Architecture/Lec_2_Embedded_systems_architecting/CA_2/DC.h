@@ -1,26 +1,31 @@
 /*
  * DC.h
  *
- *  Created on: Aug 17, 2021
- *      Author: Arshy
+ *  Created on: Feb 29, 2024
+ *      Author: Arsany
  */
 
 #ifndef DC_H_
 #define DC_H_
 #include "state.h"
 
-enum{
+
+
+//Define states of the module
+enum {
 	DC_idle,
 	DC_busy
-}DC_State_ID;
+}DC_STATE_ID;
 
-STATE_define(DC_idle);
-STATE_define(DC_busy);
+
+//declare states for Collision Avoidance : DC
+STATE_DEFINE(DC_idle);
+STATE_DEFINE(DC_busy);
 
 void DC_init();
 
-extern void (*DC_state)();
 
+extern void (*DC_STATE)();
 
 
 #endif /* DC_H_ */

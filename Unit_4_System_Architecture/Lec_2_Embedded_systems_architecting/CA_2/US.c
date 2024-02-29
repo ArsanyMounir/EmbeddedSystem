@@ -1,40 +1,46 @@
 /*
  * US.c
  *
- *  Created on: Aug 17, 2021
- *      Author: Arshy
+ *  Created on: Feb 29, 2024
+ *      Author: Arsany
  */
+
 #include "US.h"
-#include"state.h"
-int US_distance=0;
 
-void (*US_state)();
-int distanceRandom (int l, int r, int count);
-
+//Global variables
+int US_distance = 0;
 
 void US_init()
 {
-	printf("US_init\n");
-
+	//init US Driver
+	printf("US Init \n");
 }
-STATE_define(US_busy)
+
+
+void (*US_STATE)();
+int US_Random_Distance(int l , int r );
+
+
+STATE_DEFINE(US_busy)
 {
-	US_State_ID =US_busy;
-	US_distance=distanceRandom(45,55,1);
+	//State Name
+	US_STATE_ID = US_busy;
+	//State Action
+	US_distance = US_Random_Distance(45,55);
 	printf("\nUS_Waiting State: distance =%d",US_distance);
-	US_Set_distance(US_distance);
-	US_state=STATE(US_busy);
+
+	//Send distance Signal
+	US_Set_Distance(US_distance);
+	//loop to self
+	US_STATE=STATE(US_busy);
+
 }
 
 
-int distanceRandom (int l, int r, int count)
+int US_Random_Distance(int l , int r )
 {
-	int i, rand_num;
-	for(i=0; i<count; i++)
-	{
-		rand_num =( rand() % (r - l + 1) ) + l;
-	}
-	return rand_num;
-
+	int random_number;
+	random_number = (rand() % (r-l+1))+l;
+	return random_number;
 }
 

@@ -1,49 +1,53 @@
 /*
  * CA.c
  *
- *  Created on: Aug 17, 2021
- *      Author: Arshy
+ *  Created on: Feb 29, 2024
+ *      Author: Arsany
  */
 
-#include"state.h"
-#include"stdlib.h"
-#include"stdio.h"
-#include"CA.h"
-#include"US.h"
-#include"DC.h"
+#include "CA.h"
 
-int CA_speed=0;
-int CA_distance=0;
-int CA_threshold=50;
-
-void (*CA_state)();
-int distanceRandom (int l, int r, int count);
+//Global variables
+int CA_speed = 0;
+int CA_distance = 0;
+int CA_threshold = 50;
 
 
-void US_Set_distance(int d)
+
+void (*CA_STATE)();
+
+
+void US_Set_Distance(int d)
 {
 	CA_distance = d;
-	(CA_distance<=CA_threshold) ? (CA_state=STATE(CA_waiting)) : (CA_state=STATE(CA_driving));
+	(CA_distance <= CA_threshold) ? (CA_STATE=STATE(CA_waiting)):(CA_STATE=STATE(CA_driving));
 	printf("\nUS ---------distance = %d-----------> CA\n",CA_distance);
+
 }
 
 
-STATE_define(CA_waiting)
+
+
+STATE_DEFINE(CA_waiting)
 {
-	CA_State_ID =CA_waiting;
+	//State Name
+	CA_STATE_ID = CA_waiting;
 	printf("\nCA_Waiting State: distance =%d Speed =%d",CA_distance,CA_speed);
+	//State Action
 	CA_speed = 0;
+	//Send speed signal to DC motor module
 	DC_motor(CA_speed);
-
 }
 
-STATE_define(CA_driving)
+STATE_DEFINE(CA_driving)
 {
-	CA_State_ID =CA_driving;
+	//State Name
+	CA_STATE_ID = CA_driving;
 	printf("\nCA_driving State: distance =%d Speed =%d",CA_distance,CA_speed);
+	//State Action
 	CA_speed = 30;
+	//Send speed signal to DC motor module
 	DC_motor(CA_speed);
-
-
 }
+
 

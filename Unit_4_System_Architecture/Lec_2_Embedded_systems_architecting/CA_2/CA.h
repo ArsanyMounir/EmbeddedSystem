@@ -1,25 +1,29 @@
 /*
  * CA.h
  *
- *  Created on: Aug 17, 2021
- *      Author: Arshy
+ *  Created on: Feb 29, 2024
+ *      Author: Arsany
  */
 
 #ifndef CA_H_
 #define CA_H_
 #include "state.h"
-//States
+#include "stdio.h"
+#include "stdlib.h"
 
-enum{
+
+//Define states of the module
+enum {
 	CA_waiting,
 	CA_driving
-}CA_State_ID;
+}CA_STATE_ID;
 
-STATE_define(CA_waiting);
-STATE_define(CA_driving);
 
-extern void (*CA_state)();
+//declare states for Collision Avoidance : CA
+STATE_DEFINE(CA_waiting);
+STATE_DEFINE(CA_driving);
 
+extern void (*CA_STATE)();
 
 
 #endif /* CA_H_ */
