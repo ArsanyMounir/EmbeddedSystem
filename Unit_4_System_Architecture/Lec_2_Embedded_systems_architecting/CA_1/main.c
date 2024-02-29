@@ -1,32 +1,34 @@
 /*
  * main.c
  *
- *  Created on: Aug 17, 2021
- *      Author: Arshy
+ *  Created on: Feb 29, 2024
+ *      Author: Arsany
  */
-#include"stdio.h"
-#include"CA.h"
 
-void setup()
-{
-	//init all drivers
-	//init IRQ
-	//init HAL US_Driver DC_Motor
-	//init BLOCK
-	//Set States pointer
-	CA_state= STATE(CA_waiting);
-}
+#include "CA.h"
 
+
+void setup();
 
 
 
 void main()
 {
-	volatile int i;
 	setup();
 	while(1)
 	{
-		CA_state();
-		for(i=1;i<1000;i++);
+		CA_STATE();
 	}
+
+}
+
+
+void setup()
+{
+	//init all drivers
+	//init IRQ
+	//init HAL US_Driver DC_Driver
+	//init Block
+	//Set state pointer for each block
+	CA_STATE = STATE(CA_waiting);
 }
