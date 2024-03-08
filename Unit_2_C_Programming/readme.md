@@ -10,9 +10,9 @@ This unit is mainly about C programming where it is divided into 8 different lec
 <details>
 <summary> Lecture 2: Installing C Programs and Git </summary>
 - Installing tools used in the diploma and configuring them. </br>
-- learning some bash scripts and how to utilize them> </br>
-- Versions Control systems and how to interact with it> </br>
-- Creating and maintaining a Repository for the Diploma content> 
+- learning some bash scripts and how to utilize them. </br>
+- Version Control system and how to interact with it. </br>
+- Creating and maintaining a Repository for the Diploma content.
 </details>
 
 <details>
