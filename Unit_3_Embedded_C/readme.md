@@ -1,6 +1,6 @@
 # Unit 3: Embedded C Programming
 This unit dives deep into the world of embedded C programming, exploring booting sequences, running modes, and build processes with its files,
-writing those files for multiple architectures which is divided into 5 different lectures to truly learn C in-depth, Which are :
+writing those files for multiple architectures which is divided into 5 lectures, Which are :
 <details>
 <summary> Lecture 1: Introduction to build process </summary>
 - Typedef command.</br>
