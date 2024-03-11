@@ -1,0 +1,259 @@
+
+Allocating common symbols
+Common symbol       size              file
+
+SystemController_State
+                    0x4               System_Controller.o
+FlashMemory_State   0x4               Flash_Memory.o
+PressureSensor_State_ID
+                    0x1               main.o
+FlashMemory_State_ID
+                    0x1               Flash_Memory.o
+PressureSensor_State
+                    0x4               Pressure_Sensor.o
+PressureVal         0x4               Pressure_Sensor.o
+i                   0x4               startup.o
+System_Controller_State_ID
+                    0x1               driver.o
+buffer              0x28              Flash_Memory.o
+Led_Indicatore_State_ID
+                    0x1               driver.o
+FlashMemory         0x14              Flash_Memory.o
+LedIndicatore_State
+                    0x4               Led_Indicator.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+flash            0x08000000         0x00020000         xr
+sram             0x20000000         0x00005000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+
+.text           0x08000000      0x790
+ *(.vectors*)
+ .vectors       0x08000000       0x1c startup.o
+                0x08000000                vectors
+ *(.rodata*)
+ *(.text*)
+ .text          0x0800001c      0x190 driver.o
+                0x0800001c                Delay
+                0x08000040                getPressureVal
+                0x08000058                setLedIndicator
+                0x0800012c                GPIO_INITIALIZATION
+ .text          0x080001ac      0x19c Flash_Memory.o
+                0x080001ac                FlashMemory_init
+                0x08000208                FlashMemory_enqueue
+                0x08000294                store_STATE
+                0x080002d8                wait_STATE
+ .text          0x08000348      0x16c Led_Indicator.o
+                0x08000348                LedIndicator_init
+                0x080003ac                LedOn_State
+                0x080003fc                LedOFF_State
+                0x0800044c                setLedOFF
+                0x08000480                setLedON
+ .text          0x080004b4       0x68 main.o
+                0x080004b4                setup
+                0x080004e8                main
+ .text          0x0800051c       0x90 Pressure_Sensor.o
+                0x0800051c                PressureSensor_init
+                0x08000538                ST_reading
+                0x08000578                ST_wait
+ .text          0x080005ac       0xf8 startup.o
+                0x080005ac                Bus_Fault_Handler
+                0x080005ac                H_Fault_Handler
+                0x080005ac                MM_Fault_Handler
+                0x080005ac                Usage_Fault_Handler
+                0x080005ac                Default_Handler
+                0x080005ac                NMI_Handler
+                0x080005b8                Reset_Handler
+ .text          0x080006a4       0xec System_Controller.o
+                0x080006a4                SystemController_init
+                0x080006c0                ST_idle
+                0x0800075c                ST_waiting
+                0x08000790                _E_text = .
+
+.glue_7         0x08000790        0x0
+ .glue_7        0x00000000        0x0 linker stubs
+
+.glue_7t        0x08000790        0x0
+ .glue_7t       0x00000000        0x0 linker stubs
+
+.vfp11_veneer   0x08000790        0x0
+ .vfp11_veneer  0x00000000        0x0 linker stubs
+
+.v4_bx          0x08000790        0x0
+ .v4_bx         0x00000000        0x0 linker stubs
+
+.iplt           0x08000790        0x0
+ .iplt          0x00000000        0x0 driver.o
+
+.rel.dyn        0x08000790        0x0
+ .rel.iplt      0x00000000        0x0 driver.o
+
+.data           0x20000000        0x4 load address 0x08000790
+                0x20000000                _S_data = .
+ *(.data*)
+ .data          0x20000000        0x0 driver.o
+ .data          0x20000000        0x4 Flash_Memory.o
+                0x20000000                ptrFlashMemory
+ .data          0x20000004        0x0 Led_Indicator.o
+ .data          0x20000004        0x0 main.o
+ .data          0x20000004        0x0 Pressure_Sensor.o
+ .data          0x20000004        0x0 startup.o
+ .data          0x20000004        0x0 System_Controller.o
+                0x20000004                _E_data = .
+
+.igot.plt       0x20000004        0x0 load address 0x08000794
+ .igot.plt      0x00000000        0x0 driver.o
+
+.bss            0x20000004     0x1060 load address 0x08000794
+                0x20000004                _S_bss = .
+ *(.bss*)
+ .bss           0x20000004        0x0 driver.o
+ .bss           0x20000004        0x0 Flash_Memory.o
+ .bss           0x20000004        0x0 Led_Indicator.o
+ .bss           0x20000004        0x0 main.o
+ .bss           0x20000004        0x0 Pressure_Sensor.o
+ .bss           0x20000004        0x0 startup.o
+ .bss           0x20000004        0x0 System_Controller.o
+                0x20000004                _E_bss = .
+                0x20000004                . = ALIGN (0x4)
+                0x20001004                . = (. + 0x1000)
+ *fill*         0x20000004     0x1000 
+                0x20001004                _stack_top = .
+ COMMON         0x20001004        0x2 driver.o
+                0x20001004                System_Controller_State_ID
+                0x20001005                Led_Indicatore_State_ID
+ *fill*         0x20001006        0x2 
+ COMMON         0x20001008       0x44 Flash_Memory.o
+                0x20001008                FlashMemory_State
+                0x2000100c                FlashMemory_State_ID
+                0x20001010                buffer
+                0x20001038                FlashMemory
+ COMMON         0x2000104c        0x4 Led_Indicator.o
+                0x2000104c                LedIndicatore_State
+ COMMON         0x20001050        0x1 main.o
+                0x20001050                PressureSensor_State_ID
+ *fill*         0x20001051        0x3 
+ COMMON         0x20001054        0x8 Pressure_Sensor.o
+                0x20001054                PressureSensor_State
+                0x20001058                PressureVal
+ COMMON         0x2000105c        0x4 startup.o
+                0x2000105c                i
+ COMMON         0x20001060        0x4 System_Controller.o
+                0x20001060                SystemController_State
+LOAD driver.o
+LOAD Flash_Memory.o
+LOAD Led_Indicator.o
+LOAD main.o
+LOAD Pressure_Sensor.o
+LOAD startup.o
+LOAD System_Controller.o
+OUTPUT(Pressure_Detection_System.elf elf32-littlearm)
+
+.debug_info     0x00000000      0xbe4
+ .debug_info    0x00000000      0x18b driver.o
+ .debug_info    0x0000018b      0x273 Flash_Memory.o
+ .debug_info    0x000003fe      0x1e8 Led_Indicator.o
+ .debug_info    0x000005e6      0x1d4 main.o
+ .debug_info    0x000007ba      0x15f Pressure_Sensor.o
+ .debug_info    0x00000919      0x16b startup.o
+ .debug_info    0x00000a84      0x160 System_Controller.o
+
+.debug_abbrev   0x00000000      0x53b
+ .debug_abbrev  0x00000000       0xb5 driver.o
+ .debug_abbrev  0x000000b5       0xf9 Flash_Memory.o
+ .debug_abbrev  0x000001ae       0xb6 Led_Indicator.o
+ .debug_abbrev  0x00000264       0xe0 main.o
+ .debug_abbrev  0x00000344       0x92 Pressure_Sensor.o
+ .debug_abbrev  0x000003d6       0xc2 startup.o
+ .debug_abbrev  0x00000498       0xa3 System_Controller.o
+
+.debug_loc      0x00000000      0x478
+ .debug_loc     0x00000000       0xc8 driver.o
+ .debug_loc     0x000000c8       0xe0 Flash_Memory.o
+ .debug_loc     0x000001a8      0x10c Led_Indicator.o
+ .debug_loc     0x000002b4       0x58 main.o
+ .debug_loc     0x0000030c       0x84 Pressure_Sensor.o
+ .debug_loc     0x00000390       0x64 startup.o
+ .debug_loc     0x000003f4       0x84 System_Controller.o
+
+.debug_aranges  0x00000000       0xe0
+ .debug_aranges
+                0x00000000       0x20 driver.o
+ .debug_aranges
+                0x00000020       0x20 Flash_Memory.o
+ .debug_aranges
+                0x00000040       0x20 Led_Indicator.o
+ .debug_aranges
+                0x00000060       0x20 main.o
+ .debug_aranges
+                0x00000080       0x20 Pressure_Sensor.o
+ .debug_aranges
+                0x000000a0       0x20 startup.o
+ .debug_aranges
+                0x000000c0       0x20 System_Controller.o
+
+.debug_line     0x00000000      0x4b7
+ .debug_line    0x00000000       0xdc driver.o
+ .debug_line    0x000000dc       0x79 Flash_Memory.o
+ .debug_line    0x00000155       0xdc Led_Indicator.o
+ .debug_line    0x00000231       0xb4 main.o
+ .debug_line    0x000002e5       0x8d Pressure_Sensor.o
+ .debug_line    0x00000372       0xaf startup.o
+ .debug_line    0x00000421       0x96 System_Controller.o
+
+.debug_str      0x00000000      0x41d
+ .debug_str     0x00000000      0x16c driver.o
+                                0x1bf (size before relaxing)
+ .debug_str     0x0000016c      0x103 Flash_Memory.o
+                                0x1f9 (size before relaxing)
+ .debug_str     0x0000026f       0x62 Led_Indicator.o
+                                0x1d8 (size before relaxing)
+ .debug_str     0x000002d1       0x56 main.o
+                                0x1c8 (size before relaxing)
+ .debug_str     0x00000327       0x39 Pressure_Sensor.o
+                                0x1a5 (size before relaxing)
+ .debug_str     0x00000360       0x80 startup.o
+                                0x15d (size before relaxing)
+ .debug_str     0x000003e0       0x3d System_Controller.o
+                                0x1b7 (size before relaxing)
+
+.comment        0x00000000       0x11
+ .comment       0x00000000       0x11 driver.o
+                                 0x12 (size before relaxing)
+ .comment       0x00000000       0x12 Flash_Memory.o
+ .comment       0x00000000       0x12 Led_Indicator.o
+ .comment       0x00000000       0x12 main.o
+ .comment       0x00000000       0x12 Pressure_Sensor.o
+ .comment       0x00000000       0x12 startup.o
+ .comment       0x00000000       0x12 System_Controller.o
+
+.ARM.attributes
+                0x00000000       0x33
+ .ARM.attributes
+                0x00000000       0x33 driver.o
+ .ARM.attributes
+                0x00000033       0x33 Flash_Memory.o
+ .ARM.attributes
+                0x00000066       0x33 Led_Indicator.o
+ .ARM.attributes
+                0x00000099       0x33 main.o
+ .ARM.attributes
+                0x000000cc       0x33 Pressure_Sensor.o
+ .ARM.attributes
+                0x000000ff       0x33 startup.o
+ .ARM.attributes
+                0x00000132       0x33 System_Controller.o
+
+.debug_frame    0x00000000      0x2fc
+ .debug_frame   0x00000000       0x78 driver.o
+ .debug_frame   0x00000078       0x88 Flash_Memory.o
+ .debug_frame   0x00000100       0xa8 Led_Indicator.o
+ .debug_frame   0x000001a8       0x48 main.o
+ .debug_frame   0x000001f0       0x60 Pressure_Sensor.o
+ .debug_frame   0x00000250       0x4c startup.o
+ .debug_frame   0x0000029c       0x60 System_Controller.o
