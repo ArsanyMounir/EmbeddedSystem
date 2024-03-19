@@ -6,7 +6,7 @@
  ******************************************************************************
  * @attention
  *
- * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
+ * <h2><center>&copy; Copyright (c) 2024 STMicroelectronics.
  * All rights reserved.</center></h2>
  *
  * This software component is licensed by ST under BSD 3-Clause license,
@@ -21,75 +21,91 @@
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
-/*
-  APB1 	 >> 16 MHz
-  APB2 	 >> 8 MHz
-  AHB    >> 32 MHz
-  SysClk >> 32 MHz
- */
+
+
 #include"stdint.h"
 #include"stdio.h"
 #include"stdlib.h"
-#define RCC_BASE			0x40021000
+
+/*
+ * Requirements:
+ * 				APB1 Bus : 16MHz
+ * 				APB2 Bus : 8MHz
+ * 				AHB Bus  : 32MHz
+ * 				sysclk   : 32MHz
+ * 				Using only internal HSI_RC
+ *
+ */
+
 #define GPIOA_BASE			0x40010800
-#define RCC_APB2ENR			*(volatile uint32_t *)(RCC_BASE + 0x18)
 #define GPIOA_CRH			*(volatile uint32_t *)(GPIOA_BASE + 0x04)
 #define GPIOA_ODR			*(volatile uint32_t *)(GPIOA_BASE + 0x0C)
-#define RCC_CFGR 			*(volatile uint32_t *)(RCC_BASE + 0x04)
-#define RCC_CR				*(volatile uint32_t *)(RCC_BASE + 0x0)
-void clock_init()
+#define RCC_BASE			0x40021000
+#define RCC_APB2ENR			*(volatile uint32_t *)(RCC_BASE + 0x18)
+#define RCC_CFGR			*(volatile uint32_t *)(RCC_BASE + 0x04)
+#define RCC_CR				*(volatile uint32_t *)(RCC_BASE)
+
+
+
+void clk_Init()
 {
-//Bit 16 PLLSRC: PLL entry clock source
-//0: HSI oscillator clock / 2 selected as PLL input clock
-	RCC_CFGR |=(0b0<<16);
-//	Bits 1:0 SW: System clock switch
-//  10: PLL selected as system clock
-	RCC_CFGR |=(0b10<<0);
-
-//	Bits 3:2 SWS: System clock switch status
-//	10: PLL used as system clock
-	RCC_CFGR |=(0b10<<2);
-
-//	Bits 21:18 PLLMUL: PLL multiplication factor
-//	0110: PLL input clock x 8
-	RCC_CFGR |=(0b0110<<18);
-
-//	Bits 10:8 PPRE1: APB low-speed prescaler (APB1)
-//  100: HCLK divided by 2
-	RCC_CFGR |=(0b100<<8);
-
-//	Bits 7:4 HPRE: AHB prescaler
-//	0xxx: SYSCLK not divided
-	RCC_CFGR |=(0b0000<<4);
-
-//	Bits 13:11 PPRE2: APB high-speed prescaler (APB2)
-//	101: HCLK divided by 4
-	RCC_CFGR |=(0b101<<11);
-
-//	Bit 24 PLLON: PLL enable
-//	1: PLL ON
-	RCC_CR |=(1<<24);
 
 
-//  Bit 2 IOPAEN: IO port A clock enable
-//  1: IO port A clock enabled
-	RCC_APB2ENR |= (1<<2);
+	// 	Bit 16 : PLLSRC: PLL Entry Clk Source
+	//	0: HSI Oscillator clk/2 selected as PLL input clk
+		RCC_CFGR &= ~(1<<16);
+
+	//	Bits 1:0 SW: System clock switch
+	//  10: PLL Selected as system clk
+		RCC_CFGR |=(0b10);
+
+	//	Bits 3:2 SWS: System clock switch status
+	//  10: PLL Used as system clk
+		RCC_CFGR |=(0b10<<2);
+
+
+
+	// 	Bits 21:18 PLLMUL: PLL Multiplication Factor
+	//	Caustion: These bits can be written on only when PLL is disabled.
+	//	0110: PLL input clk x8
+		RCC_CFGR |=(0b0110<<18);
+
+	//	Bit 24:PLL Enable
+	//  1: PLL ON
+		RCC_CR |=(1<<24);
+
+	//	Bits 7:4 HPRE: AHB prescaler
+	//	0xxx: SYSCLK not divided
+		RCC_CFGR |=(0b0000<<4);
+
+	//	Bits 10:8 PPRE1: APB low-speed prescaler (APB1)
+	//  100: HCLK divided by 2
+		RCC_CFGR |=(0b100<<8);
+
+	//	Bits 13:11 PPRE2: APB high-speed prescaler (APB2)
+	//	101: HCLK divided by 4
+		RCC_CFGR |=(0b101<<11);
+
+	//  Bit 2 IOPAEN: IO port A clock enable
+	//  1: IO port A clock enabled
+		RCC_APB2ENR |= (1<<2);
 }
+
+
 
 
 
 int main(void)
 {
-	volatile int i;
-	clock_init();
-	GPIOA_CRH   &= 0xFF0FFFFF;
-	GPIOA_CRH   |= 0x00200000;
+	clk_Init();
 	while(1)
 	{
-		GPIOA_ODR |=1<<13;
-		for(i=0;i<5000;i++);
-		GPIOA_ODR &= ~(1<<13);
-		for(i=0;i<5000;i++);
+		/*Code*/
 	}
 }
+
+
+
+
+
 
