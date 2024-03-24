@@ -6,7 +6,7 @@
  ******************************************************************************
  * @attention
  *
- * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
+ * <h2><center>&copy; Copyright (c) 2024 STMicroelectronics.
  * All rights reserved.</center></h2>
  *
  * This software component is licensed by ST under BSD 3-Clause license,
@@ -18,81 +18,107 @@
  */
 
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
-  #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
+#warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
+
 
 #include"stdint.h"
 #include"stdio.h"
 #include"stdlib.h"
 
-//GPIO
+//GPIOA
 #define GPIOA_BASE			0x40010800
 #define GPIOA_CRL			*(volatile uint32_t *)(GPIOA_BASE + 0x00)
 #define GPIOA_CRH			*(volatile uint32_t *)(GPIOA_BASE + 0x04)
 #define GPIOA_ODR			*(volatile uint32_t *)(GPIOA_BASE + 0x0C)
+
+
 //AFIO
 #define AFIO_BASE			0x40010000
 #define AFIO_EXTICR1		*(volatile uint32_t *)(AFIO_BASE + 0x08)
+
+
+
 //RCC
 #define RCC_BASE			0x40021000
 #define RCC_APB2ENR			*(volatile uint32_t *)(RCC_BASE + 0x18)
-//EXTI
+
+//EXTI0
 #define EXTI_BASE			0x40010400
 #define EXTI_IMR			*(volatile uint32_t *)(EXTI_BASE + 0x00)
 #define EXTI_RTSR			*(volatile uint32_t *)(EXTI_BASE + 0x08)
 #define EXTI_PR				*(volatile uint32_t *)(EXTI_BASE + 0x14)
 #define NVIC_ISER0			*(volatile uint32_t *)(0xE000E100)
 
-void clock_init()
-{
 
-//  Bit 2 IOPAEN: IO port A clock enable
-//  1: IO port A clock enabled
-	RCC_APB2ENR |= (1<<2);
-//  Enable AFIO
+
+//
+
+
+
+void clk_Init(void)
+{
+	//Enable clk for AFIO
 	RCC_APB2ENR |= (1<<0);
+
+	//Enable clk for PORT A
+	RCC_APB2ENR |= (1<<2);
+
 }
 
-void GPIO_init()
+void GPIO_Init(void)
 {
-	//Config PIN A0 INPUT Floating
-	//01: Floating input (reset state)
-	GPIOA_CRL   |=(1<<2);
-	//Config PIN13 OUTPUT
-	GPIOA_CRH   &= 0xFF0FFFFF;
-	GPIOA_CRH   |= 0x00200000;
+
+	//Config GPIOA PIN0 to be input
+	//CNFy[1:0]: Port x configuration bits (y= 0 .. 7)
+	//10: Input with pull-up / pull-down
+	GPIOA_CRL  |= (1<<2);
+	//Config GPIOA PIN13 to be output
+	GPIOA_CRH  &= 0xFF0FFFFF;
+	GPIOA_CRH  |= 0x00200000;
 
 }
+
+void EXTI_Init(void)
+{
+	//Selecting PORTA for EXTI0
+	//	Bits 15:0 EXTI0 configuration
+	//	0000: PA[x] pin
+	AFIO_EXTICR1=0;
+
+	//Rising edge trigger for EXTI0
+	//	Bits 19:0 TRx: Rising trigger event configuration bit of line x
+	//	0: Rising trigger disabled (for Event and Interrupt) for input line
+	EXTI_RTSR|= (1<<0);
+
+	//Enable Mask for EXTI0
+	//	Bits 19:0 MRx: Event mask on line x
+	//	0: Event request from Line x is masked
+	EXTI_IMR |= (1<<0);
+
+	//Enable NVIC IRQ 6
+	NVIC_ISER0 |= (1<<6);
+
+}
+
+
 
 
 int main(void)
 {
-	clock_init();
-	GPIO_init();
-
-//	Bits 15:0 EXTI0 configuration
-//	0000: PA[x] pin
-	AFIO_EXTICR1=0;
-
-//	Bits 19:0 TRx: Rising trigger event configuration bit of line x
-//	0: Rising trigger disabled (for Event and Interrupt) for input line
-	EXTI_RTSR|= (1<<0);
-
-//	Bits 19:0 MRx: Event mask on line x
-//	0: Event request from Line x is masked
-	EXTI_IMR |= (1<<0);
-
-//	Enable NVIC IRQ6 (EXTI0)
-	NVIC_ISER0|= (1<<6);
-
+	clk_Init();
+	EXTI_Init();
+	GPIO_Init();
 
 	while(1);
 }
 
 void EXTI0_IRQHandler(void)
 {
-	//toggle LED
-	GPIOA_ODR ^= (1<<13);
-	//Clear EXTI0
+	//Toggle led on Rising edge when Interrupt occurs
+	GPIOA_ODR ^=(1<<13);
+	//Clear EXTI0 to prevent Interrupt loop
 	EXTI_PR |= (1<<0);
+
 }
+
