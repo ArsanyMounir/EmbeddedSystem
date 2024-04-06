@@ -1,0 +1,320 @@
+
+Task3.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000001d4  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  000001d4  00000248  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  00000248  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000278  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000030  00000000  00000000  000002b4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000005e2  00000000  00000000  000002e4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 0000054d  00000000  00000000  000008c6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000001b2  00000000  00000000  00000e13  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000074  00000000  00000000  00000fc8  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000002d8  00000000  00000000  0000103c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000000cb  00000000  00000000  00001314  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000020  00000000  00000000  000013df  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 a5 00 	call	0x14a	; 0x14a <main>
+  64:	0c 94 e8 00 	jmp	0x1d0	; 0x1d0 <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <delay>:
+#define CLEAR_BIT(reg,bit) 		(reg &= ~(1<<bit))
+#define TOGGLE_BIT(reg,bit) 	(reg ^= (1<<bit))
+#define READ_BIT(reg,bit) 		((reg>>bit) & 1)
+
+void delay (int time)
+{
+  6c:	cf 93       	push	r28
+  6e:	df 93       	push	r29
+  70:	00 d0       	rcall	.+0      	; 0x72 <delay+0x6>
+  72:	00 d0       	rcall	.+0      	; 0x74 <delay+0x8>
+  74:	00 d0       	rcall	.+0      	; 0x76 <delay+0xa>
+  76:	cd b7       	in	r28, 0x3d	; 61
+  78:	de b7       	in	r29, 0x3e	; 62
+  7a:	9e 83       	std	Y+6, r25	; 0x06
+  7c:	8d 83       	std	Y+5, r24	; 0x05
+	volatile int i,j ;
+	for (i=0;i<time;i++)
+  7e:	1a 82       	std	Y+2, r1	; 0x02
+  80:	19 82       	std	Y+1, r1	; 0x01
+  82:	14 c0       	rjmp	.+40     	; 0xac <delay+0x40>
+	{
+		for(j=0;j<time;j++);
+  84:	1c 82       	std	Y+4, r1	; 0x04
+  86:	1b 82       	std	Y+3, r1	; 0x03
+  88:	05 c0       	rjmp	.+10     	; 0x94 <delay+0x28>
+  8a:	8b 81       	ldd	r24, Y+3	; 0x03
+  8c:	9c 81       	ldd	r25, Y+4	; 0x04
+  8e:	01 96       	adiw	r24, 0x01	; 1
+  90:	9c 83       	std	Y+4, r25	; 0x04
+  92:	8b 83       	std	Y+3, r24	; 0x03
+  94:	2b 81       	ldd	r18, Y+3	; 0x03
+  96:	3c 81       	ldd	r19, Y+4	; 0x04
+  98:	8d 81       	ldd	r24, Y+5	; 0x05
+  9a:	9e 81       	ldd	r25, Y+6	; 0x06
+  9c:	28 17       	cp	r18, r24
+  9e:	39 07       	cpc	r19, r25
+  a0:	a4 f3       	brlt	.-24     	; 0x8a <delay+0x1e>
+#define READ_BIT(reg,bit) 		((reg>>bit) & 1)
+
+void delay (int time)
+{
+	volatile int i,j ;
+	for (i=0;i<time;i++)
+  a2:	89 81       	ldd	r24, Y+1	; 0x01
+  a4:	9a 81       	ldd	r25, Y+2	; 0x02
+  a6:	01 96       	adiw	r24, 0x01	; 1
+  a8:	9a 83       	std	Y+2, r25	; 0x02
+  aa:	89 83       	std	Y+1, r24	; 0x01
+  ac:	29 81       	ldd	r18, Y+1	; 0x01
+  ae:	3a 81       	ldd	r19, Y+2	; 0x02
+  b0:	8d 81       	ldd	r24, Y+5	; 0x05
+  b2:	9e 81       	ldd	r25, Y+6	; 0x06
+  b4:	28 17       	cp	r18, r24
+  b6:	39 07       	cpc	r19, r25
+  b8:	2c f3       	brlt	.-54     	; 0x84 <delay+0x18>
+	{
+		for(j=0;j<time;j++);
+	}
+}
+  ba:	00 00       	nop
+  bc:	26 96       	adiw	r28, 0x06	; 6
+  be:	0f b6       	in	r0, 0x3f	; 63
+  c0:	f8 94       	cli
+  c2:	de bf       	out	0x3e, r29	; 62
+  c4:	0f be       	out	0x3f, r0	; 63
+  c6:	cd bf       	out	0x3d, r28	; 61
+  c8:	df 91       	pop	r29
+  ca:	cf 91       	pop	r28
+  cc:	08 95       	ret
+
+000000ce <GPIO_Init>:
+#include "MemMap.h"
+#include "Utilities.h"
+
+
+void GPIO_Init(void)
+{
+  ce:	cf 93       	push	r28
+  d0:	df 93       	push	r29
+  d2:	cd b7       	in	r28, 0x3d	; 61
+  d4:	de b7       	in	r29, 0x3e	; 62
+	SET_BIT(DDRC,2);
+  d6:	84 e3       	ldi	r24, 0x34	; 52
+  d8:	90 e0       	ldi	r25, 0x00	; 0
+  da:	24 e3       	ldi	r18, 0x34	; 52
+  dc:	30 e0       	ldi	r19, 0x00	; 0
+  de:	f9 01       	movw	r30, r18
+  e0:	20 81       	ld	r18, Z
+  e2:	24 60       	ori	r18, 0x04	; 4
+  e4:	fc 01       	movw	r30, r24
+  e6:	20 83       	st	Z, r18
+	SET_BIT(DDRC,3);
+  e8:	84 e3       	ldi	r24, 0x34	; 52
+  ea:	90 e0       	ldi	r25, 0x00	; 0
+  ec:	24 e3       	ldi	r18, 0x34	; 52
+  ee:	30 e0       	ldi	r19, 0x00	; 0
+  f0:	f9 01       	movw	r30, r18
+  f2:	20 81       	ld	r18, Z
+  f4:	28 60       	ori	r18, 0x08	; 8
+  f6:	fc 01       	movw	r30, r24
+  f8:	20 83       	st	Z, r18
+	SET_BIT(DDRC,4);
+  fa:	84 e3       	ldi	r24, 0x34	; 52
+  fc:	90 e0       	ldi	r25, 0x00	; 0
+  fe:	24 e3       	ldi	r18, 0x34	; 52
+ 100:	30 e0       	ldi	r19, 0x00	; 0
+ 102:	f9 01       	movw	r30, r18
+ 104:	20 81       	ld	r18, Z
+ 106:	20 61       	ori	r18, 0x10	; 16
+ 108:	fc 01       	movw	r30, r24
+ 10a:	20 83       	st	Z, r18
+	SET_BIT(DDRC,5);
+ 10c:	84 e3       	ldi	r24, 0x34	; 52
+ 10e:	90 e0       	ldi	r25, 0x00	; 0
+ 110:	24 e3       	ldi	r18, 0x34	; 52
+ 112:	30 e0       	ldi	r19, 0x00	; 0
+ 114:	f9 01       	movw	r30, r18
+ 116:	20 81       	ld	r18, Z
+ 118:	20 62       	ori	r18, 0x20	; 32
+ 11a:	fc 01       	movw	r30, r24
+ 11c:	20 83       	st	Z, r18
+	SET_BIT(DDRC,6);
+ 11e:	84 e3       	ldi	r24, 0x34	; 52
+ 120:	90 e0       	ldi	r25, 0x00	; 0
+ 122:	24 e3       	ldi	r18, 0x34	; 52
+ 124:	30 e0       	ldi	r19, 0x00	; 0
+ 126:	f9 01       	movw	r30, r18
+ 128:	20 81       	ld	r18, Z
+ 12a:	20 64       	ori	r18, 0x40	; 64
+ 12c:	fc 01       	movw	r30, r24
+ 12e:	20 83       	st	Z, r18
+	SET_BIT(DDRC,7);
+ 130:	84 e3       	ldi	r24, 0x34	; 52
+ 132:	90 e0       	ldi	r25, 0x00	; 0
+ 134:	24 e3       	ldi	r18, 0x34	; 52
+ 136:	30 e0       	ldi	r19, 0x00	; 0
+ 138:	f9 01       	movw	r30, r18
+ 13a:	20 81       	ld	r18, Z
+ 13c:	20 68       	ori	r18, 0x80	; 128
+ 13e:	fc 01       	movw	r30, r24
+ 140:	20 83       	st	Z, r18
+}
+ 142:	00 00       	nop
+ 144:	df 91       	pop	r29
+ 146:	cf 91       	pop	r28
+ 148:	08 95       	ret
+
+0000014a <main>:
+
+int main(void)
+{
+ 14a:	cf 93       	push	r28
+ 14c:	df 93       	push	r29
+ 14e:	00 d0       	rcall	.+0      	; 0x150 <main+0x6>
+ 150:	00 d0       	rcall	.+0      	; 0x152 <main+0x8>
+ 152:	cd b7       	in	r28, 0x3d	; 61
+ 154:	de b7       	in	r29, 0x3e	; 62
+	GPIO_Init();
+ 156:	0e 94 67 00 	call	0xce	; 0xce <GPIO_Init>
+	volatile int i,j;
+	while(1)
+	{
+		for(i=0;i<10;i++)
+ 15a:	1a 82       	std	Y+2, r1	; 0x02
+ 15c:	19 82       	std	Y+1, r1	; 0x01
+ 15e:	33 c0       	rjmp	.+102    	; 0x1c6 <main+0x7c>
+		{
+			for(j=0;j<10;j++)
+ 160:	1c 82       	std	Y+4, r1	; 0x04
+ 162:	1b 82       	std	Y+3, r1	; 0x03
+ 164:	27 c0       	rjmp	.+78     	; 0x1b4 <main+0x6a>
+			{
+				PORTC = 0b1011|(i<<4);
+ 166:	85 e3       	ldi	r24, 0x35	; 53
+ 168:	90 e0       	ldi	r25, 0x00	; 0
+ 16a:	29 81       	ldd	r18, Y+1	; 0x01
+ 16c:	3a 81       	ldd	r19, Y+2	; 0x02
+ 16e:	22 95       	swap	r18
+ 170:	32 95       	swap	r19
+ 172:	30 7f       	andi	r19, 0xF0	; 240
+ 174:	32 27       	eor	r19, r18
+ 176:	20 7f       	andi	r18, 0xF0	; 240
+ 178:	32 27       	eor	r19, r18
+ 17a:	2b 60       	ori	r18, 0x0B	; 11
+ 17c:	fc 01       	movw	r30, r24
+ 17e:	20 83       	st	Z, r18
+				delay(250);
+ 180:	8a ef       	ldi	r24, 0xFA	; 250
+ 182:	90 e0       	ldi	r25, 0x00	; 0
+ 184:	0e 94 36 00 	call	0x6c	; 0x6c <delay>
+				PORTC = 0b0111|(j<<4);
+ 188:	85 e3       	ldi	r24, 0x35	; 53
+ 18a:	90 e0       	ldi	r25, 0x00	; 0
+ 18c:	2b 81       	ldd	r18, Y+3	; 0x03
+ 18e:	3c 81       	ldd	r19, Y+4	; 0x04
+ 190:	22 95       	swap	r18
+ 192:	32 95       	swap	r19
+ 194:	30 7f       	andi	r19, 0xF0	; 240
+ 196:	32 27       	eor	r19, r18
+ 198:	20 7f       	andi	r18, 0xF0	; 240
+ 19a:	32 27       	eor	r19, r18
+ 19c:	27 60       	ori	r18, 0x07	; 7
+ 19e:	fc 01       	movw	r30, r24
+ 1a0:	20 83       	st	Z, r18
+				delay(250);
+ 1a2:	8a ef       	ldi	r24, 0xFA	; 250
+ 1a4:	90 e0       	ldi	r25, 0x00	; 0
+ 1a6:	0e 94 36 00 	call	0x6c	; 0x6c <delay>
+	volatile int i,j;
+	while(1)
+	{
+		for(i=0;i<10;i++)
+		{
+			for(j=0;j<10;j++)
+ 1aa:	8b 81       	ldd	r24, Y+3	; 0x03
+ 1ac:	9c 81       	ldd	r25, Y+4	; 0x04
+ 1ae:	01 96       	adiw	r24, 0x01	; 1
+ 1b0:	9c 83       	std	Y+4, r25	; 0x04
+ 1b2:	8b 83       	std	Y+3, r24	; 0x03
+ 1b4:	8b 81       	ldd	r24, Y+3	; 0x03
+ 1b6:	9c 81       	ldd	r25, Y+4	; 0x04
+ 1b8:	0a 97       	sbiw	r24, 0x0a	; 10
+ 1ba:	ac f2       	brlt	.-86     	; 0x166 <main+0x1c>
+{
+	GPIO_Init();
+	volatile int i,j;
+	while(1)
+	{
+		for(i=0;i<10;i++)
+ 1bc:	89 81       	ldd	r24, Y+1	; 0x01
+ 1be:	9a 81       	ldd	r25, Y+2	; 0x02
+ 1c0:	01 96       	adiw	r24, 0x01	; 1
+ 1c2:	9a 83       	std	Y+2, r25	; 0x02
+ 1c4:	89 83       	std	Y+1, r24	; 0x01
+ 1c6:	89 81       	ldd	r24, Y+1	; 0x01
+ 1c8:	9a 81       	ldd	r25, Y+2	; 0x02
+ 1ca:	0a 97       	sbiw	r24, 0x0a	; 10
+ 1cc:	4c f2       	brlt	.-110    	; 0x160 <main+0x16>
+				PORTC = 0b0111|(j<<4);
+				delay(250);
+			}
+		}
+
+	}
+ 1ce:	c5 cf       	rjmp	.-118    	; 0x15a <main+0x10>
+
+000001d0 <_exit>:
+ 1d0:	f8 94       	cli
+
+000001d2 <__stop_program>:
+ 1d2:	ff cf       	rjmp	.-2      	; 0x1d2 <__stop_program>
